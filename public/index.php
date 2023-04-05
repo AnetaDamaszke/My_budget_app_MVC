@@ -16,4 +16,11 @@
 
   $router = new Router();
 
-  echo get_class($router);
+  //Add the routes
+  $router->add('', ['controller' => 'Home', 'action' => 'index']);
+  $router->add('about', ['controller' => 'About', 'action' => 'index']);
+
+  //Display the routing table
+  echo '<pre>';
+  var_dump($router->getRoutes());
+  echo '</pre>';
