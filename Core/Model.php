@@ -28,11 +28,12 @@ use PDO;
             try {
                 $db = new PDO("mysql:host=$host; dbname=$dbname; charset=utf8", $username, $password);
 
-                return $db;
             } catch (PDOException $e) {
                 echo $e->getMessage();
             }
         }
+
+        return $db;
     }
  }
  
