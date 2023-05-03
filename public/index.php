@@ -6,9 +6,10 @@
  * PHP version 8.1.10
  */
 
- // Require the controller class
- // require '../App/Controllers/About.php';
-
+/** 
+ * Composer
+ */
+ require dirname(__DIR__)  . '/vendor/autoload.php';
 
  /**
   * Autoloader
