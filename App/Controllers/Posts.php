@@ -3,20 +3,25 @@
 namespace App\Controllers;
 
 use \Core\View;
+use App\Models\Post;
 
 /**
  * About page controller
  * 
  * PHP version 8.1.10
  */
- class About extends \Core\Controller
+ class Posts extends \Core\Controller
  {
     /**
      * Show the index page
      */
     protected function indexAction()
     {
-        View::renderTemplate('About/index.html');
+        $posts = Post::getAll();
+
+        View::renderTemplate('Posts/index.html', [
+            'posts' => $posts
+        ]);
     }
 
     /**
