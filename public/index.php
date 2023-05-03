@@ -6,7 +6,8 @@
  * PHP version 8.1.10
  */
 
- //echo 'Requested URL = "' . $_SERVER['QUERY_STRING'] .'"';
+ // Require the controller class
+  require '../App/Controllers/About.php';
 
  /**
   * Routing
@@ -15,7 +16,7 @@
   require '../Core/Router.php';
 
   $router = new Router();
-
+ 
   //Add the routes
   $router->add('', ['controller' => 'Home', 'action' => 'index']);
   $router->add('about', ['controller' => 'About', 'action' => 'index']);
@@ -23,6 +24,7 @@
   $router->add('{controller}/{id:\d+}/{action}');
   $router->add('admin/{action}/{controller}');
 
+  /*
   //Display the routing table
   
 
@@ -37,3 +39,6 @@
   } else {
     echo "No route found for URL '$url'";
   }
+  */
+
+  $router->dispatch($_SERVER['QUERY_STRING']);
