@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="description" content="Project for course">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <title>{% block title %}{% endblock %}</title>
+        <script src="https://www.google.com/recaptcha/enterprise.js?render=<?php echo $site_key;?>"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Concert+One&family=Raleway:wght@300;400;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/custom.css">
+    </head>
+    <body>
+
+        <!-- Navbar -->
+        <nav class="nav navbar navbar-light navbar-expand-md menu">
+            <div class="container">
+                <a class="navbar-brand" href="index.php">
+                    <img class="menu-logo" src="/img/MYBUDGET.svg" alt="logo" />
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navContent">
+                    <div class="navbar-nav">
+                        <a href="/" class="nav-item nav-link menu-link">Home</a>
+                        <a href="/about/index" class="nav-item nav-link ms-2 ms-lg-3 menu-link">O programie</a>
+                        <a href="#" class="nav-item nav-link ms-2 ms-lg-3 active menu-link">Zaloguj</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        {% block body %}
+        {% endblock %}
+
+        <!-- Footer -->
+        <footer class="text-white site-footer">
+            <div class="container">
+                <div class="row pb-3">
+                    <div class="col-md-6 pt-3 text-center text-md-start">
+                        <img class="" src="/img/MYBUDGET_FOOTER.svg" alt="logo" />
+                    </div>
+                    <div class="col-md-6 pt-3 text-center text-md-end">
+                        Designed by Aneta Damaszke 2022
+                    </div>
+                    
+                </div>
+            </div>
+        </footer>
+
+        
+    </body>
+</html>
