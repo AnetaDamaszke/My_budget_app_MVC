@@ -7,7 +7,7 @@ namespace App\Controllers;
  * 
  * PHP version 8.1.10
  */
- class Home
+ class Home extends \Core\Controller
  {
     /**
      * Show the index page
