@@ -68,6 +68,10 @@ use PDO;
           if (filter_var($this->email, FILTER_VALIDATE_EMAIL) === false) {
             $this->errors[] = 'Invalid email';
           }
+
+          if($this->emailExists($this->email)) {
+            $this->errors[] = 'Email already taken';
+          }
     
           // Password
           if (isset($this->password)) {
@@ -83,5 +87,21 @@ use PDO;
               $this->errors[] = 'Password needs at least one number';
             }
           }
+    }
+
+    /**
+     * See if a user aleady exist with the specified email
+     */
+    public static function emailExists($email) 
+    {
+        $sql = 'SELECT * FROM users WHERE email = :email';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->fetch() !== false;
     }
 }
