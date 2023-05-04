@@ -4,6 +4,45 @@
 
 {% block body %}
 
-    <h1>Sign up</h1>
+    <h1 class="pb-2 text-center">Zarejestruj się</h1>
+
+    <div class="container">
+        <div class="m-auto registartion-box">
+            <form method="post">
+                <div class="form-group">
+                    <label for="inputName" class="form-control-label">Imię</label>
+                    <input type="text" name="name" value="" id="inputName" p
+                    laceholder="np. Jan Kowalski" class="form-control" autofocus/>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail" class="form-control-label">E-mail</label>
+                    <input type="inputEmail" name="email" value="" id="email" 
+                    placeholder="np. jan@kowalski.com" class="form-control"/>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword" class="form-control-label">Hasło</label>
+                    <div class="d-flex"> 
+                        <input type="password" name="password" value="" id="inputPassword" class="form-control"/>                                       
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPasswordConfirm" class="form-control-label">Powtórz hasło</label>
+                    <div class="d-flex"> 
+                        <input type="password" name="password_confirmation" value="" id="inputPasswordConfirm" class="form-control"/>    
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" name="rules"/> Akceptuję regulmin
+                    </label>
+                </div>
+                <div class="text-center pt-4 registration-message">
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn text-uppercase text-white form-button">Załóż konto</button>
+                </div>        
+            </form>
+        </div>
+    </div>
 
 {% endblock %}
