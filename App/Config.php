@@ -18,17 +18,17 @@ namespace App;
     /**
      * Database name
      */
-    const DB_NAME = 'mvc';
+    const DB_NAME = 'my_budget_mvc';
 
     /**
      * Database username
      */
-    const DB_USER = 'root';
+    const DB_USER = 'mvc_user';
 
     /**
      * Database password
      */
-    const DB_PASSWORD = '';
+    const DB_PASSWORD = 'Qqryczq89!';
 
     /**
      * Show or hide error message on screen
