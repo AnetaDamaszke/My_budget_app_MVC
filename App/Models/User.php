@@ -13,6 +13,11 @@ use PDO;
  class User extends \Core\Model
  {
     /**
+     * Error message
+     */
+    public $errors = [];
+
+    /**
      * Class constructor
      */
     public function __construct($data = [])
@@ -28,18 +33,55 @@ use PDO;
 
     public function save()
     {
-        $password_hash = password_hash($this->password, PASSWORD_DEFAULT);
+        $this->validate();
 
-        $sql = 'INSERT INTO users (name, email, password_hash)
-                VALUES (:name, :email, :password_hash)';
+        if(empty($this->errors)) {
+            $password_hash = password_hash($this->password, PASSWORD_DEFAULT);
 
-        $db = static::getDB();
-        $stmt = $db->prepare($sql);
+            $sql = 'INSERT INTO users (name, email, password_hash)
+                    VALUES (:name, :email, :password_hash)';
 
-        $stmt->bindValue(':name', $this->name, PDO::PARAM_STR);
-        $stmt->bindValue(':email', $this->email, PDO::PARAM_STR);
-        $stmt->bindValue(':password_hash', $password_hash, PDO::PARAM_STR);
+            $db = static::getDB();
+            $stmt = $db->prepare($sql);
 
-        $stmt->execute();
+            $stmt->bindValue(':name', $this->name, PDO::PARAM_STR);
+            $stmt->bindValue(':email', $this->email, PDO::PARAM_STR);
+            $stmt->bindValue(':password_hash', $password_hash, PDO::PARAM_STR);
+
+            return $stmt->execute();
+        }
+
+        return false;
+    }
+
+    /**
+     * Validate current property values
+     */
+    public function validate()
+    {
+          // Name
+          if ($this->name == '') {
+            $this->errors[] = 'Name is required';
+          }
+    
+          // Email
+          if (filter_var($this->email, FILTER_VALIDATE_EMAIL) === false) {
+            $this->errors[] = 'Invalid email';
+          }
+    
+          // Password
+          if (isset($this->password)) {
+            if (strlen($this->password) < 6) {
+              $this->errors[] = 'Please enter at least 6 characters for the password';
+            }
+      
+            if (preg_match('/.*[a-z]+.*/i', $this->password) == 0) {
+              $this->errors[] = 'Password needs at least one letter';
+            }
+      
+            if (preg_match('/.*\d+.*/i', $this->password) == 0) {
+              $this->errors[] = 'Password needs at least one number';
+            }
+          }
     }
 }
