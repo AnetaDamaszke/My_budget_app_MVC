@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use \Core\View;
+use \App\Models\User;
 
 /**
  * Signup controller
@@ -25,6 +26,10 @@ class Signup extends \Core\Controller
      */
     public function createAction()
     {
-        var_dump($_POST);
+        $user = new User($_POST);
+
+        $user->save();
+
+        View::renderTemplate('Signup/success.html');
     }
 }

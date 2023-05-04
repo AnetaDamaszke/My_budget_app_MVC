@@ -23,7 +23,7 @@ namespace App;
     /**
      * Database username
      */
-    const DB_USER = 'mvc_user';
+    const DB_USER = 'Aneta';
 
     /**
      * Database password
