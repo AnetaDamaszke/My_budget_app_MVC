@@ -30,7 +30,8 @@ class Signup extends \Core\Controller
 
         if($user->save()) {
 
-            View::renderTemplate('Signup/success.html');
+            header('Location: http://' . $_SERVER['HTTP_HOST'] . '/signup/success', true, 303);
+            exit;
 
         } else {
 
@@ -38,5 +39,13 @@ class Signup extends \Core\Controller
                 'user'=> $user
             ]);
         }
+    }
+
+    /**
+     * Show the signup success page
+     */
+    public function successAction()
+    {
+        View::renderTemplate('Signup/success.html');
     }
 }
