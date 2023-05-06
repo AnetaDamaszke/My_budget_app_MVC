@@ -36,6 +36,7 @@ use PDO;
         $this->validate();
 
         if(empty($this->errors)) {
+          
             $password_hash = password_hash($this->password, PASSWORD_DEFAULT);
 
             $sql = 'INSERT INTO users (name, email, password_hash)
@@ -61,30 +62,30 @@ use PDO;
     {
           // Name
           if ($this->name == '') {
-            $this->errors[] = 'Name is required';
+            $this->errors[] = 'Imię jest wymagane';
           }
     
           // Email
           if (filter_var($this->email, FILTER_VALIDATE_EMAIL) === false) {
-            $this->errors[] = 'Invalid email';
+            $this->errors[] = 'Niepoprawny email';
           }
 
-          if($this->emailExists($this->email)) {
-            $this->errors[] = 'Email already taken';
+          if(static::emailExists($this->email)) {
+            $this->errors[] = 'Ten email juz istnieje!';
           }
     
           // Password
           if (isset($this->password)) {
             if (strlen($this->password) < 6) {
-              $this->errors[] = 'Please enter at least 6 characters for the password';
+              $this->errors[] = 'Proszę podaj conajmniej 6 znaków';
             }
       
             if (preg_match('/.*[a-z]+.*/i', $this->password) == 0) {
-              $this->errors[] = 'Password needs at least one letter';
+              $this->errors[] = 'Hasło musi posiadać conajmniej 1 literę i 1 cyfrę';
             }
       
             if (preg_match('/.*\d+.*/i', $this->password) == 0) {
-              $this->errors[] = 'Password needs at least one number';
+              $this->errors[] = 'Hasło musi posiadać conajmniej 1 cyfrę';
             }
           }
     }
