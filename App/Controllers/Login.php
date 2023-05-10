@@ -26,9 +26,14 @@ use \App\Models\User;
      */
     public function createAction()
     {
-        $user = User::findByEmail($_POST['email']);
+        $user = User::authenticate($_POST['email'], $_POST['password']);
 
-        var_dump($user);
+        if ($user) {
+
+            echo 'Gut';
+        } else {
+            View::renderTemplate('Login/new.html');
+        }
     }
 
 

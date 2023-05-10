@@ -98,6 +98,9 @@ use PDO;
         return static::findByEmail($email) !== false;
     }
 
+    /**
+     * Find auser model by email address
+     */
     public static function findByEmail($email) 
     {
       $sql = 'SELECT * FROM users WHERE email = :email';
@@ -111,5 +114,20 @@ use PDO;
       $stmt->execute();
 
       return $stmt->fetch();
+    }
+
+    /**
+     * Authenticate a user by email and password
+     */
+    public static function authenticate($email, $password)
+    {
+      $user = User::findByEmail($email);
+
+      if($user) {
+        if(password_verify($password, $user->password_hash)) {
+          return $user;
+        }
+      }
+      return false;
     }
 }
