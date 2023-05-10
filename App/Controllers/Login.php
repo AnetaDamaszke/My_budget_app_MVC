@@ -30,8 +30,7 @@ use \App\Models\User;
 
         if ($user) {
 
-            header('Location: http://' . $_SERVER['HTTP_HOST'] . '/', true, 303);
-            exit;
+            $this->redirect('/');
 
         } else {
             View::renderTemplate('Login/new.html', [
