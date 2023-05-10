@@ -19,4 +19,12 @@ use \Core\View;
     {
         View::renderTemplate('Login/new.html');
     }
+
+    /**
+     * Log in a user
+     */
+    public function createAction()
+    {
+        echo($_REQUEST['email'] . ', ' . $_REQUEST['password']);
+    }
  }
