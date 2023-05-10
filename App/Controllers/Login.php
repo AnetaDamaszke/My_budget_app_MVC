@@ -30,6 +30,8 @@ use \App\Models\User;
 
         if ($user) {
 
+            $_SESSION['user_id'] = $user->id;
+
             $this->redirect('/');
 
         } else {
@@ -40,4 +42,4 @@ use \App\Models\User;
     }
 
 
- }
+ } 

@@ -5,8 +5,14 @@
 {% block body %}
 
 <div class="text-center">
+
     <h1>Witaj</h1>
-    <a href="/signup/new">Zarejestruj się</a> lub <a href="/login">Zaloguj</a>
+
+    {% if session.user_id %}
+        User with ID {{ session.user_id }} is loddeg in.
+    {% else %}
+        <a href="/signup/new">Zarejestruj się</a> lub <a href="/login">Zaloguj</a>
+    {% endif %}
 </div>
 
 {% endblock %}
