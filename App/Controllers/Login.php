@@ -30,9 +30,13 @@ use \App\Models\User;
 
         if ($user) {
 
-            echo 'Gut';
+            header('Location: http://' . $_SERVER['HTTP_HOST'] . '/', true, 303);
+            exit;
+
         } else {
-            View::renderTemplate('Login/new.html');
+            View::renderTemplate('Login/new.html', [
+                'email' => $_POST['email']
+            ]);
         }
     }
 
