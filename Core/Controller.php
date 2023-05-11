@@ -2,6 +2,8 @@
 
 namespace Core;
 
+use \App\Auth;
+
 /**
  * Base controller
  * 
@@ -63,5 +65,18 @@ namespace Core;
     {
         header('Location: http://' . $_SERVER['HTTP_HOST'] . $url, true, 303);
         exit;
+    }
+
+    /**
+     * Rrequire the user to be logged in
+     */
+    public function requireLogin()
+    {
+        if(! Auth::isLoggedIn()) {
+            
+            Auth::rememberRequestedPage();
+
+            $this->redirect('/login');
+        }
     }
 }
