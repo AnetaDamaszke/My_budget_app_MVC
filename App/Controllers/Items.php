@@ -11,17 +11,8 @@ use \App\Auth;
  * PHP version 8.1.10
  */
 
- class Items extends \Core\Controller
+ class Items extends Authenticated
  {
-
-    /**
-     * Require to be authenticated before giving access to all methods in the cntroller
-     */
-    protected function before()
-    {
-        $this->requireLogin();
-    }
-
     /**
      * Item index
      */
