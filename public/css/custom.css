@@ -701,3 +701,20 @@ input:checked ~ .checkmark {
         padding: 10px 0;
     }
 }
+
+.alert {
+    border: 1px solid #ccc;
+    padding: 6px;
+}
+
+.alert-info {
+    background-color: #c4dae5;
+}
+
+.alert-success {
+    background-color: #cfebc4;
+}
+
+.alert-warning {
+    background-color: #e2c3aa;
+}

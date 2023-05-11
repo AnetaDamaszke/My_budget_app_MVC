@@ -5,6 +5,7 @@ namespace App\Controllers;
 use \Core\View;
 use \App\Models\User;
 use \App\Auth;
+use \App\Flash;
 
 /**
  * Login controller
@@ -33,9 +34,14 @@ use \App\Auth;
 
             Auth::login($user);
 
+            Flash::addMessage('Logowanie zakończone sukcesem');
+
             $this->redirect(Auth::getReturnToPage());
 
         } else {
+
+            Flash::addMessage('Logowanie nieudane, spróbuj ponownie', Flash::WARNING);
+
             View::renderTemplate('Login/new.html', [
                 'email' => $_POST['email']
             ]);
@@ -48,6 +54,18 @@ use \App\Auth;
     public function destroyAction()
     {
         Auth::logout();
+
+        Flash::addMessage('Wylogowano z powodzeniem');
+
+        $this->redirect('/login/show-logout-message');
+    }
+
+    /**
+     * Show a "logged out" flash message
+     */
+    public function showLogoutMessageAction()
+    {
+        Flash::addMessage('Wylogowano z powodzeniem');
 
         $this->redirect('/');
     }

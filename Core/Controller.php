@@ -3,6 +3,7 @@
 namespace Core;
 
 use \App\Auth;
+use \App\Flash;
 
 /**
  * Base controller
@@ -73,6 +74,8 @@ use \App\Auth;
     public function requireLogin()
     {
         if(! Auth::getUser()) {
+
+            Flash::addMessage('Zaloguj się, aby uzyskać dostęp do strony', Flash::INFO);
             
             Auth::rememberRequestedPage();
 

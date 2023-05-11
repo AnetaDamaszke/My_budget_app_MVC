@@ -32,9 +32,18 @@
         </nav>
 
         <div class="pt-5 body-container">
+
+            {% for message in flash_messages %}
+                <div class="text-center alert alert-{{ message.type }}">
+                    {{ message.body }}
+                </div>
+            {% endfor %}
+            
             {% block body %}
             {% endblock %}
         </div>
+
+        
 
         <!-- Footer -->
         <footer class="text-white site-footer">
