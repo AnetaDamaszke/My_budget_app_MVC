@@ -1,0 +1,57 @@
+<?php
+
+namespace App;
+
+/**
+ * Authentication
+ * 
+ * PHP version 8.1.10
+ */
+
+ class Auth
+ {
+    /**
+     * Login the user
+     */
+    public static function login($user)
+    {
+        session_regenerate_id(true);
+
+        $_SESSION['user_id'] = $user->id;
+    }
+
+    /**
+     * Logut the user
+     */
+    public static function logout()
+    {
+        //Unset all of them session variable
+        $_SESSION = [];
+
+        //Delete the session cookie
+        if (ini_get('session.use_cookies')) {
+            $params = session_get_cookie_params();
+
+            setcookie(
+                session_name(),
+                '',
+                time() - 42000,
+                $params['path'],
+                $params['domain'],
+                $params['secure'],
+                $params['httponly']
+            );
+        }
+
+        //Finally destroy the session
+        session_destroy();
+    }
+
+    /**
+     * Return indicator of whether a user is logged in or not
+     */
+    public static function isLoggedIn()
+    {
+        return isset($_SESSION['user_id']);
+    }
+ }
