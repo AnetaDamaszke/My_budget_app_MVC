@@ -6,7 +6,7 @@
 
 <div class="text-center">
 
-    {% if is_logged_in %}
+    {% if current_user %}
         <h1>Witaj {{ current_user.name }},</h1>
         <a href="/logout">Wyloguj</a>
     {% else %}

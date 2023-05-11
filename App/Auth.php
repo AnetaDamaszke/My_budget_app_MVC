@@ -50,14 +50,6 @@ use App\Models\User;
     }
 
     /**
-     * Return indicator of whether a user is logged in or not
-     */
-    public static function isLoggedIn()
-    {
-        return isset($_SESSION['user_id']);
-    }
-
-    /**
      * Remember the originally requested page in the session
      */
     public static function rememberRequestedPage()

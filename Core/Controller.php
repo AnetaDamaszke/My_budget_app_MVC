@@ -72,7 +72,7 @@ use \App\Auth;
      */
     public function requireLogin()
     {
-        if(! Auth::isLoggedIn()) {
+        if(! Auth::getUser()) {
             
             Auth::rememberRequestedPage();
 
