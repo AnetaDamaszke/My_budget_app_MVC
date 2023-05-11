@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Models\User;
+
 /**
  * Authentication
  * 
@@ -69,5 +71,16 @@ namespace App;
     public static function getReturnToPage()
     {
         return $_SESSION['return_to'] ?? '/';
+    }
+
+    /**
+     * Get the current logged in user
+     */
+    public static function getUser()
+    {
+        if (isset($_SESSION['user_id'])) {
+
+            return User::findByID($_SESSION['user_id']);
+        }
     }
  }
