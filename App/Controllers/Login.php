@@ -33,7 +33,7 @@ use \App\Auth;
 
             Auth::login($user);
 
-            $this->redirect('/');
+            $this->redirect(Auth::getReturnToPage());
 
         } else {
             View::renderTemplate('Login/new.html', [

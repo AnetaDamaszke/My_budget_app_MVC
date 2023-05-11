@@ -54,4 +54,20 @@ namespace App;
     {
         return isset($_SESSION['user_id']);
     }
+
+    /**
+     * Remember the originally requested page in the session
+     */
+    public static function rememberRequestedPage()
+    {
+        $_SESSION['return_to'] = $_SERVER['REQUEST_URI'];
+    }
+
+    /**
+     * Get the originally equested page to return to after login
+     */
+    public static function getReturnToPage()
+    {
+        return $_SESSION['return_to'] ?? '/';
+    }
  }

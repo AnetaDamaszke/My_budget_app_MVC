@@ -20,7 +20,10 @@ use \App\Auth;
     public function indexAction()
     {
         if(! Auth::isLoggedIn()) {
-            exit("access denied");
+            
+            Auth::rememberRequestedPage();
+
+            $this->redirect('/login');
         }
 
         View::renderTemplate('Items/index.html');
