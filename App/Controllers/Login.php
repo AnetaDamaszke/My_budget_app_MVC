@@ -34,7 +34,8 @@ use \App\Flash;
 
         if ($user) {
 
-            Auth::login($user);
+            Auth::login($user, $remember_me);
+
 
             Flash::addMessage('Logowanie zakończone sukcesem');
 
