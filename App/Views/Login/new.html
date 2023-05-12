@@ -23,6 +23,12 @@
                     required title="Pole wymagane"/>                                       
                 </div>
             </div>
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" name="remember_me" {% if remember_me %} checked="checked" {% endif %}/> Pamiętaj mnie
+                </label>
+                
+            </div>
             <div class="text-center">
                 <button type="submit" class="btn text-uppercase text-white form-button">Zaloguj się</button>
             </div>
