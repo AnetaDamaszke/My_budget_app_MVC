@@ -34,4 +34,9 @@ namespace App;
      * Show or hide error message on screen
      */
     const SHOW_ERRORS = false;
+
+    /**
+     * Secret key for hashing
+     */
+    const SECRET_KEY = 'canUeGOPhLQ6BX6aC5GdwxSLrSTCJSIM';
  }
