@@ -27,10 +27,19 @@ use \App\Flash;
             throw new \Exception("$file not found");
         }
     }
+
     /**
      * Render a view template using Twig
      */
     public static function renderTemplate($template, $args = [])
+    {
+        echo static::getTemplate($template, $args);
+    }
+
+    /**
+     * Get the content of a view template using Twig
+     */
+    public static function getTemplate($template, $args = [])
     {
         static $twig = null;
 
@@ -41,6 +50,6 @@ use \App\Flash;
             $twig->addGlobal('flash_messages', \App\Flash::getMessages());
         }
 
-        echo $twig->render($template, $args);
+        return $twig->render($template, $args);
     }
  }
