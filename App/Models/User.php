@@ -174,4 +174,21 @@ use \App\Token;
 
       return $stmt->execute();
     }
+
+    /**
+     * Send password reset instuctions to the user specified
+     */
+    public static function sendPasswordReset($email)
+    {
+      $user = static::findByEmail($email);
+
+      if($user) {
+        
+        if($user) {
+
+
+        }
+
+      }
+    }
 }
