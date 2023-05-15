@@ -4,6 +4,7 @@ namespace App\Models;
 
 use PDO;
 use \App\Token;
+use \App\Mail;
 
 /**
  * User model
@@ -186,7 +187,7 @@ use \App\Token;
         
         if($user->startPasswordReset()) {
 
-          
+          $user->sendPasswordResetEmail();
 
         }
 
@@ -194,7 +195,7 @@ use \App\Token;
     }
 
     /**
-     * Start the password reset process y generating a new token
+     * Start the password reset process by generating a new token
      */
     protected function startPasswordReset()
     {
@@ -217,5 +218,18 @@ use \App\Token;
       $stmt->bindValue(':id', $this->id, PDO::PARAM_INT);
 
       return $stmt->execute();
+    }
+
+    /**
+     * Send password reset instructins in an aemail to the user
+     */
+    protected function sendPasswordResetEmail()
+    {
+      $url = 'http://' . $_SERVER['HTTP_HOST'] . '/password/reset/' . $this->password_reset_token;
+
+      $text = "Kliknij w link aby zresetować hasło: $url";
+      $html = "Kliknij <a href=\"$url\">tutaj</a> aby zresetować hasło.";
+
+      Mail::send($this->email, 'Resetowanie hasła', $text, $html);
     }
 }
