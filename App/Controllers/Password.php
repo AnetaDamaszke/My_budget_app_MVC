@@ -30,4 +30,20 @@ use \App\Models\User;
 
         View::renderTemplate('Password/reset_requested.html');
      }
+
+     /**
+      * Show the reset password form
+      */
+     public function resetAction()
+     {
+        $token = $this->route_params['token'];
+
+        echo $token;
+
+        $user = User::findByPasswordReset($token);
+
+        //View::renderTemplate('Password/reset.html', [
+        //    'token' => $token
+        //]);
+     }
  }

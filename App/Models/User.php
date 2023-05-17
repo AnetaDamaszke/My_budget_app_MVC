@@ -233,4 +233,36 @@ use \Core\View;
 
       Mail::send($this->email, 'Resetowanie hasła', $text, $html);
     }
+
+    /**
+     * Find a user by password reset token and expiry
+     */
+    public static function findByPasswordReset($token)
+    {
+      $token = new Token($token);
+      $hashed_token = $token->getHash();
+
+      $sql = 'SELECT * FROM users 
+              WHERE password_reset_hash = :token_hash';
+
+      $db = static::getDB();
+      $stmt = $db->prepare($sql);
+
+      $stmt->bindValue(':token_hash', $hashed_token, PDO::PARAM_STR);
+
+      $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+
+      $stmt->execute();
+
+      $user = $stmt->fetch();
+
+      if ($user) {
+
+        if (strtotime($user->password_reset_expires_at) > time()) {
+
+          return $user;
+        }
+
+      }
+    }
 }
