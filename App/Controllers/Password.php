@@ -38,16 +38,36 @@ use \App\Models\User;
      {
         $token = $this->route_params['token'];
 
-        echo $token;
-
         $user = User::findByPasswordReset($token);
 
         if($user) {
 
-            View::renderTemplate('Password/reset.html');
+            View::renderTemplate('Password/reset.html', [
+                'token' => $token
+            ]);
 
         } else {
             echo "password reset token invalid";
         }
      }
+
+     /**
+      * Reset the user's password
+      */
+     public function resetPasswordAction()
+     {
+       $token = $_POST['token'];
+
+       $user = User::findByPasswordReset($token);
+
+        if($user) {
+
+            echo "resset user's password here";
+
+        } else {
+            echo "password reset token invalid";
+        }
+
+       }
+     
  }
