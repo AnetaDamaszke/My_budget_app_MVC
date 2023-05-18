@@ -44,6 +44,7 @@ use \Core\View;
 
             $token= new Token();
             $hashed_token = $token->getHash();
+            $this->activation_token = $token->getValue();
 
             $sql = 'INSERT INTO users (name, email, password_hash, activation_hash)
                     VALUES (:name, :email, :password_hash, :activation_hash)';
@@ -311,5 +312,18 @@ use \Core\View;
       }
 
       return false;
+    }
+
+    /**
+     * Send an email to the user containig the activation link
+     */
+    public function sendActivationEmail()
+    {
+      $url = 'http://' . $_SERVER['HTTP_HOST'] . '/signup/activate/' . $this->activation_token;
+
+      $text = View::getTemplate('Signup/activation_email.txt', ['url' => $url]);
+      $html = View::getTemplate('Signup/activation_email.html', ['url' => $url]);
+
+      Mail::send($this->email, 'Aktywacja konta', $text, $html);
     }
 }
