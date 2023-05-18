@@ -258,9 +258,11 @@ use \Core\View;
 
       if ($user) {
 
+        // Check password reset token hasn't expired
         if (strtotime($user->password_reset_expires_at) > time()) {
 
           return $user;
+          
         }
 
       }
