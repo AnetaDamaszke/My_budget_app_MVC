@@ -56,7 +56,7 @@ use \App\Models\User;
 
         if ($user->resetPassword($_POST['password'])) {
 
-            echo 'password valid';
+            View::renderTemplate('Password/reset_success.html');
 
         } else {
 

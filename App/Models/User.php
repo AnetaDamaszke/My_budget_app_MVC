@@ -287,9 +287,7 @@ use \Core\View;
 
       $this->validate();
 
-      return empty($this->errors);
-
-      /**if (empty($this->errors)) {
+      if (empty($this->errors)) {
 
         $password_hash = password_hash($this->password, PASSWORD_DEFAULT);
 
@@ -308,6 +306,6 @@ use \Core\View;
         return $stmt->execute();
       }
 
-      return false;*/
+      return false;
     }
 }
