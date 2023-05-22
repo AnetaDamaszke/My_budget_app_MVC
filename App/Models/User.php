@@ -141,7 +141,7 @@ use \Core\View;
     {
       $user = User::findByEmail($email);
 
-      if($user) {
+      if($user && $user->is_active) {
         if(password_verify($password, $user->password_hash)) {
           return $user;
         }
@@ -325,5 +325,26 @@ use \Core\View;
       $html = View::getTemplate('Signup/activation_email.html', ['url' => $url]);
 
       Mail::send($this->email, 'Aktywacja konta', $text, $html);
+    }
+
+    /**
+     * Ativate the user account with the specified activation tken
+     */
+    public static function activate($value)
+    {
+      $token = new Token($value);
+      $hashed_token = $token->getHash();
+
+      $sql = 'UPDATE users
+              SET is_active = 1,
+              activation_hash = null
+              WHERE activation_hash = :hashed_token';
+
+      $db = static::getDB();
+      $stmt = $db->prepare($sql);
+
+      $stmt->bindValue(':hashed_token', $hashed_token, PDO::PARAM_STR);
+
+      $stmt->execute();
     }
 }
