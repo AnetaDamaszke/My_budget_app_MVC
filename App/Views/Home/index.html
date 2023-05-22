@@ -7,8 +7,31 @@
 <div class="text-center">
 
     {% if current_user %}
-        <h1>Witaj {{ current_user.name }},</h1>
-        <a href="/logout">Wyloguj</a>
+
+        <!-- User menu -->
+        <section class="user-menu">
+                <h1 class="mb-4">Witaj {{ current_user.name }}!</h1>
+                <div class="m-auto user-menu__box">
+                    <a href="#" class="btn d-block text-uppercase user-menu__button" type="button">
+                        Dodaj przychód
+                    </a>
+                    <a href="#" class="btn d-block text-uppercase user-menu__button" type="button">
+                        Dodaj wydatek
+                    </a>
+                    <a href="#" class="btn d-block text-uppercase user-menu__button" type="button">
+                        Zobacz bilans
+                    </a>
+                    <div class="py-2"></div>
+                    <a href="#" class="btn d-block text-uppercase user-menu__button" type="button">
+                        Ustawienia konta
+                    </a>
+                    <a href="/logout" class="btn d-block text-uppercase user-menu__button" type="button">
+                        Wyloguj się
+                    </a>
+                </div>
+                <img class="img-fluid user-menu__img" src="img/REBUILD_THE_ECONOMY.png" alt="budżet domowy" />
+        </section>
+
     {% else %}
         <a href="/signup/new">Zarejestruj się</a> lub <a href="/login">Zaloguj</a>
     {% endif %}
