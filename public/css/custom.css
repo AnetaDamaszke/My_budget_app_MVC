@@ -394,14 +394,14 @@ body {
 /** Add income/expance **/
 
 .add {
-    background-color: #A5A6F6;
-    min-height: calc(100vh - 105px);
+    /**background-color: #A5A6F6;**/
+
 }
 
 .add-header {
     font-size: 36px;
     font-weight: 600;
-    padding: 60px 0;
+    padding: 60px 0 30px 0;
 }
 
 .add-box {
@@ -484,8 +484,8 @@ input:checked ~ .checkmark {
 
 @media only screen and (max-width: 576px) {
     .add-header {
-        font-size: 24px;
-        padding: 40px 0;
+        font-size: 28px;
+        padding: 40px 0 20px 0;
     }
 }
 

@@ -16,8 +16,10 @@ class Incomes extends Authenticated
     /**
      * Show the incomes page
      */
-    public function indexAction()
+    public function showAction()
     {
-        View::renderTemplate('Incomes/index.html');
+        View::renderTemplate('Incomes/index.html', [
+            'user' => Auth::getUser()
+        ]);
     }
 }
