@@ -57,7 +57,11 @@ use \Core\View;
             $stmt->bindValue(':password_hash', $password_hash, PDO::PARAM_STR);
             $stmt->bindValue(':activation_hash', $hashed_token, PDO::PARAM_STR);
 
-            return $stmt->execute();
+            $stmt->execute();
+
+            $this->addDefaultIncomesCategoriesToUser();
+
+            return true;
         }
 
         return false;
@@ -117,7 +121,7 @@ use \Core\View;
     }
 
     /**
-     * Find auser model by email address
+     * Find a user model by email address
      */
     public static function findByEmail($email) 
     {
@@ -346,5 +350,22 @@ use \Core\View;
       $stmt->bindValue(':hashed_token', $hashed_token, PDO::PARAM_STR);
 
       $stmt->execute();
+    }
+
+    /**
+     * Copying default incomes categories to user categories
+     */
+    public function addDefaultIncomesCategoriesToUser()
+    {
+      $sql = 'INSERT INTO incomes_category_assigned_to_users (user_id, category_name) 
+      SELECT users.id, incomes_category_default.name 
+      FROM users, incomes_category_default 
+      WHERE users.name = :username';
+      
+      $db = static::getDB();
+      $stmt = $db->prepare($sql);
+
+      $stmt -> bindValue(':username', $this->name, PDO::PARAM_STR);
+      $stmt -> execute();
     }
 }
