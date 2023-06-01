@@ -366,6 +366,7 @@ use \Core\View;
       $stmt = $db->prepare($sql);
 
       $stmt -> bindValue(':username', $this->name, PDO::PARAM_STR);
-      $stmt -> execute();
+      
+      return $stmt -> execute();
     }
 }
