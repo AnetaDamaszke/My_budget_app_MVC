@@ -23,4 +23,27 @@ class Expenses extends Authenticated
             'user' => Auth::getUser()
         ]);
     }
+
+    /**
+     * 
+     */
+    public function addNewAction()
+    {
+        $expense = new Expense($_POST);   
+
+        if($expense->addExpense()) {
+
+            echo 'gut!';
+
+            //View::renderTemplate('Expenses/success.html');
+
+        } else {
+
+            echo 'błąd';
+
+            //View::renderTemplate('Expenses/index.html', [
+            //    'expense'=> $expense
+            //]);
+        }
+    }
 }
