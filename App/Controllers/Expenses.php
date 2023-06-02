@@ -33,17 +33,13 @@ class Expenses extends Authenticated
 
         if($expense->addExpense()) {
 
-            echo 'gut!';
-
-            //View::renderTemplate('Expenses/success.html');
+            View::renderTemplate('Expenses/success.html');
 
         } else {
 
-            echo 'błąd';
-
-            //View::renderTemplate('Expenses/index.html', [
-            //    'expense'=> $expense
-            //]);
+            View::renderTemplate('Expenses/index.html', [
+                'expense'=> $expense
+            ]);
         }
     }
 }
