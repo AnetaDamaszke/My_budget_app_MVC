@@ -60,6 +60,7 @@ use \Core\View;
             $stmt->execute();
 
             $this->addDefaultIncomesCategoriesToUser();
+            $this->addDefaultExpensesCategoriesToUser();
 
             return true;
         }
@@ -371,23 +372,20 @@ use \Core\View;
     }
 
     /**
-     * Get income category name assigned to user from database
+     * Copying default expenses categories to user categories
      */
-    public static function getIncomeCategoryName()
+    public function addDefaultExpensesCategoriesToUser()
     {
-        $id = $_SESSION['user_id'];
+      $sql = 'INSERT INTO expenses_category_assigned_to_users (user_id, category_name) 
+      SELECT users.id, expenses_category_default.name 
+      FROM users, expenses_category_default 
+      WHERE users.name = :username';
+      
+      $db = static::getDB();
+      $stmt = $db->prepare($sql);
 
-        $sql = "SELECT category_name 
-        FROM incomes_category_assigned_to_users 
-        WHERE user_id='$id'";
-
-        $db = static::getDB();
-        $stmt = $db->prepare($sql);
-
-        $stmt->execute();
-
-        $categories = $stmt->fetch();
-
-        return $categories;
+      $stmt -> bindValue(':username', $this->name, PDO::PARAM_STR);
+      
+      return $stmt -> execute();
     }
 }
