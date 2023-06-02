@@ -42,4 +42,23 @@ use \App\Auth;
 
         return $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
     }
+
+    /**
+     * Get payment methods assigned to user from database
+     */
+    public static function getPaymentMethodsAssignedToUserName()
+    {
+        $userId = Auth::getUserId();
+
+        $sql = "SELECT name
+        FROM payment_methods_assigned_to_users 
+        WHERE user_id='$userId'";
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+    }
 }

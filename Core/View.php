@@ -50,6 +50,7 @@ use \App\Flash;
             $twig->addGlobal('flash_messages', \App\Flash::getMessages());
             $twig->addGlobal('income_category', \App\Models\Income::getIncomeCategoryAssignedToUserName());
             $twig->addGlobal('expense_category', \App\Models\Expense::getExpenseCategoryAssignedToUserName());
+            $twig->addGlobal('payment_method', \App\Models\Expense::getPaymentMethodsAssignedToUserName());
         }
 
         return $twig->render($template, $args);

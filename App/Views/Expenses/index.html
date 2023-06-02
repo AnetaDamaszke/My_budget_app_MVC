@@ -42,6 +42,9 @@
                                 <label class="form-check-label d-block mb-2">Sposób płatności:</label>
                                 <select name="payment" class="w-100">
                                     <option selected="selected">Wybierz:</option>
+                                    {% for name in payment_method %}
+                                        <option>{{ name }}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                         </div>
