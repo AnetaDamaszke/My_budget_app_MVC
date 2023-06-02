@@ -5,6 +5,7 @@ namespace App\Controllers;
 use \Core\View;
 use \App\Auth;
 use \App\Models\Income;
+use \App\Models\User;
 
 /**
  * Incomes controller
@@ -30,6 +31,14 @@ class Incomes extends Authenticated
     public function addAction()
     {
         $income = new Income($_POST);
+
+        $name = $income->getIncomeCategoryAssignedToUserName();
+
+        foreach($name as $i) 
+        {
+            echo $i;
+        }
+        
 
         if($income->add()) {
 

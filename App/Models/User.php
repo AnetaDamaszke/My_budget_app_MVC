@@ -369,4 +369,25 @@ use \Core\View;
       
       return $stmt -> execute();
     }
+
+    /**
+     * Get income category name assigned to user from database
+     */
+    public static function getIncomeCategoryName()
+    {
+        $id = $_SESSION['user_id'];
+
+        $sql = "SELECT category_name 
+        FROM incomes_category_assigned_to_users 
+        WHERE user_id='$id'";
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->execute();
+
+        $categories = $stmt->fetch();
+
+        return $categories;
+    }
 }

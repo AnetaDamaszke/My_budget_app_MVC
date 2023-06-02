@@ -32,6 +32,9 @@
                                 <label class="form-check-label d-block mb-2">Kategoria:</label>
                                 <select name="category" class="w-100">
                                     <option selected="selected">Wybierz:</option>
+                                    {% for name in income_category %}
+                                        <option>{{ name }}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                         </div>

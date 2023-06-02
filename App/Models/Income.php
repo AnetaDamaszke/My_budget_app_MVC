@@ -13,6 +13,7 @@ use \App\Models\User;
 
  class Income extends \Core\Model
  {
+
     /**
      * Class constructor
      */
@@ -28,9 +29,9 @@ use \App\Models\User;
      */
     public function add()
     {   
-        $id = $_SESSION['user_id'];
+        $userId = $_SESSION['user_id'];
 
-        $categoryId = '1';
+        $categoryId = Income::getIncomeCategoryId($this->category, $userId);
 
         $sql = 'INSERT INTO incomes VALUES (NULL, :userid, :categoryid, :value, :date, :comment)';
 
@@ -49,16 +50,13 @@ use \App\Models\User;
     /**
      * Get income category ID from database
      */
-    public static function getIncomeCategoryId($categoryName, $id)
+    public static function getIncomeCategoryId($categoryName, $userId)
     {
-        
         $sql = "SELECT id FROM incomes_category_assigned_to_users 
-        WHERE category_name='$categoryName' AND user_id='$id'";
+        WHERE category_name='$categoryName' AND user_id='$userId'";
 
         $db = static::getDB();
         $stmt = $db->prepare($sql); 
-
-        $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
 
         $stmt->execute();;
 
@@ -66,13 +64,13 @@ use \App\Models\User;
     }
 
     /**
-     * Get income category name from database
+     * Get income category name assigned to user from database
      */
-    public static function getIncomeCategoryName()
+    public static function getIncomeCategoryAssignedToUserName()
     {
         $id = $_SESSION['user_id'];
 
-        $sql = "SELECT category_name 
+        $sql = "SELECT category_name
         FROM incomes_category_assigned_to_users 
         WHERE user_id='$id'";
 
@@ -81,6 +79,6 @@ use \App\Models\User;
 
         $stmt->execute();
 
-        return $stmt->fetchAll();
+        return $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
     }
 }
