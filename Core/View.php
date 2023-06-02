@@ -49,6 +49,7 @@ use \App\Flash;
             $twig->addGlobal('current_user', \App\Auth::getUser());
             $twig->addGlobal('flash_messages', \App\Flash::getMessages());
             $twig->addGlobal('income_category', \App\Models\Income::getIncomeCategoryAssignedToUserName());
+            $twig->addGlobal('expense_category', \App\Models\Expense::getExpenseCategoryAssignedToUserName());
         }
 
         return $twig->render($template, $args);

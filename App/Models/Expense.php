@@ -23,4 +23,23 @@ use \App\Auth;
             $this->$key = $value;
         };
     }
+
+    /**
+     * Get expense category name assigned to user from database
+     */
+    public static function getExpenseCategoryAssignedToUserName()
+    {
+        $userId = Auth::getUserId();
+
+        $sql = "SELECT category_name
+        FROM expenses_category_assigned_to_users 
+        WHERE user_id='$userId'";
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+    }
 }
