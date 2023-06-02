@@ -61,6 +61,7 @@ use \Core\View;
 
             $this->addDefaultIncomesCategoriesToUser();
             $this->addDefaultExpensesCategoriesToUser();
+            $this->addDefaultPaymentMethodsToUser();
 
             return true;
         }
@@ -379,6 +380,24 @@ use \Core\View;
       $sql = 'INSERT INTO expenses_category_assigned_to_users (user_id, category_name) 
       SELECT users.id, expenses_category_default.name 
       FROM users, expenses_category_default 
+      WHERE users.name = :username';
+      
+      $db = static::getDB();
+      $stmt = $db->prepare($sql);
+
+      $stmt -> bindValue(':username', $this->name, PDO::PARAM_STR);
+      
+      return $stmt -> execute();
+    }
+
+    /**
+     * Copying default payment methods to user
+     */
+    public function addDefaultPaymentMethodsToUser()
+    {
+      $sql = 'INSERT INTO payment_methods_assigned_to_users (user_id, name) 
+      SELECT users.id, payment_methods_default.name 
+      FROM users, payment_methods_default 
       WHERE users.name = :username';
       
       $db = static::getDB();
