@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use \Core\View;
 use \App\Auth;
-use \App\Models\Income;
+use \App\Models\Expense;
 
 /**
  * Expenses controller
@@ -12,7 +12,15 @@ use \App\Models\Income;
  * PHP version 8.1.10
  */
 
-class Incomes extends Authenticated
+class Expenses extends Authenticated
 {
-    
+    /**
+     * Show the expenses page
+     */
+    public function addAction()
+    {
+        View::renderTemplate('Expenses/index.html', [
+            'user' => Auth::getUser()
+        ]);
+    }
 }
