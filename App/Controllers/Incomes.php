@@ -5,7 +5,6 @@ namespace App\Controllers;
 use \Core\View;
 use \App\Auth;
 use \App\Models\Income;
-use \App\Models\User;
 
 /**
  * Incomes controller
@@ -18,7 +17,7 @@ class Incomes extends Authenticated
     /**
      * Show the incomes page
      */
-    public function showAction()
+    public function addAction()
     {
         View::renderTemplate('Incomes/index.html', [
             'user' => Auth::getUser()
@@ -28,31 +27,19 @@ class Incomes extends Authenticated
     /**
      * 
      */
-    public function addAction()
+    public function addNewAction()
     {
-        $income = new Income($_POST);
+        $income = new Income($_POST);   
 
-        $name = $income->getIncomeCategoryAssignedToUserName();
+        if($income->addIncome()) {
 
-        foreach($name as $i) 
-        {
-            echo $i;
-        }
-        
-
-        if($income->add()) {
-
-            echo 'gut!';
-
-            //$this->redirect('/income/success');
+            View::renderTemplate('Incomes/success.html');
 
         } else {
 
-            echo 'Błąd!';
-
-            //View::renderTemplate('Incomes/index.html', [
-            //    'income'=> $income
-            //]);
+            View::renderTemplate('Incomes/index.html', [
+                'income'=> $income
+            ]);
         }
     }
 }

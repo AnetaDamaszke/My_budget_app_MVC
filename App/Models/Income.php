@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use PDO;
-use \App\Models\User;
+use \App\Auth;
 
 /**
  * Income model
@@ -27,9 +27,9 @@ use \App\Models\User;
     /**
      * Add new income to table in database
      */
-    public function add()
+    public function addIncome()
     {   
-        $userId = $_SESSION['user_id'];
+        $userId = Auth::getUserId();
 
         $categoryId = Income::getIncomeCategoryId($this->category, $userId);
 
@@ -60,7 +60,7 @@ use \App\Models\User;
 
         $stmt->execute();;
 
-        return $stmt->fetch();
+        return $stmt->fetchColumn();
     }
 
     /**
@@ -68,11 +68,11 @@ use \App\Models\User;
      */
     public static function getIncomeCategoryAssignedToUserName()
     {
-        $id = $_SESSION['user_id'];
+        $userId = Auth::getUserId();
 
         $sql = "SELECT category_name
         FROM incomes_category_assigned_to_users 
-        WHERE user_id='$id'";
+        WHERE user_id='$userId'";
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);

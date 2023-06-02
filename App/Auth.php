@@ -131,4 +131,16 @@ use App\Models\RememberedLogin;
             setcookie('remember_me', '', time() - 3600, '/');
         }
     }
+
+    /**
+     * Get the current user id
+     */
+    public static function getUserId()
+    {
+        if (isset($_SESSION['user_id'])) {
+            return ($_SESSION['user_id']);
+        } else {
+            return static::loginFromRememberCookie();
+        }
+    }
  }
