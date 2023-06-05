@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+{% block title %}Expenses{% endblock %}
+
+{% block body %}
+
+<!-- Balance -->
+<section class="balance">
+    <div class="container">
+        <h1 id="balanceHeader" class="text-center add-header">Bilans</h1>
+        <div class="row">
+
+            <!-- Expenses -->
+            <div class="col-lg-6 px-3 px-md-5">
+                <h2 class="text-uppercase text-center balance-subheader">Wydatki</h2>
+                <div class="box balance-box" style="background-color: #4FC6A8;">
+                    <div class="accordion" id="accordionExpenseBalance">
+                        <div class="accordion" id="accordionExpenseBalance1">
+                            <div class="accordion-item">
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="heading'.$number.'">
+                                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" 
+                                                        data-bs-target="#collapse'.$number.'" aria-expanded="true" aria-controls="collapse'.$number.'">
+                                                            <span class=""></span>
+                                                        </button>
+                                                    </h2>
+                                                </div>
+                                                <div id="collapse'.$number.'" class="accordion-collapse collapse" aria-labelledby="heading'.$number.'" 
+                                                data-bs-parent="#accordionBalance'.$number.'">
+                                                    <div class="accordion-body">
+                                                        <table> 
+
+                                                            <tr><td class="accordion__bold-text"></td>
+                                                                <td></td>
+                                                                <td></td></tr>
+                                                                <tr>
+                                                                    <td colspan="2" class="accordion__bold-text">Suma:</td> <td class="accordion__sum">
+                                                                        <span></span> zł
+                                                                    </td>
+                                                                </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                            </div>  
+                        </div>
+                    </div>
+                    <div class="d-flex mt-4 mb-3">
+                        <h3 class="text-uppercase balance-box__item-subheader">Całkowita suma wydatków:</h3>
+                        <div class="box balance-box__sum">
+                            
+                            <span id="allExpensesSum">zł</span>
+                            
+                        </div>
+                    </div>
+
+                    <!-- Pie chart -->
+                    <div class="piechart mt-5">
+                        <h2 class="balance-subheader">Wykres Twoich wydatków:</h2> 
+                        <div class="text-center piechart__key mb-5">
+                            
+                                        <div class="d-flex mb-1">
+                                            <div class="small-square"></div>
+                                            <span></span>
+                                        </div>
+                                    
+                                    
+                
+                            <style>
+                            .piechart__item {
+                                background-image: conic-gradient()
+                                
+                            }
+                        </style>
+                        <div class="piechart__item mx-auto"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Incomes -->
+            <div class="col-lg-6 px-3 px-md-5">
+            <h2 class="text-uppercase text-center balance-subheader">Przychody</h2>
+                <div class="box balance-box" style="background-color: #99DDCC;">
+                    <div class="accordion" id="accordionIncomeBalance01">
+                        <div class="accordion-item">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading0'.$number.'">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse0'.$number.'" aria-expanded="true" aria-controls="collapse0'.$number.'">
+                                        <span class="">kategoria</span>
+                                    </button>
+                                </h2>
+                            </div>
+                            <div id="collapse0'.$number.'" class="accordion-collapse collapse" aria-labelledby="heading0'.$number.'" data-bs-parent="#accordionBalance0'.$number.'">
+                                <div class="accordion-body text-center">
+                                    <table>
+                                        <tr>
+                                            <td class="accordion__bold-text"></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr> 
+                                        <tr>
+                                            <td colspan="2" class="accordion__bold-text">Suma:</td>
+                                            <td class="accordion__sum">
+                                                <span id="incomes1Sum"></span> zł
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>  
+                    </div>
+                    <div class="d-flex mt-4">
+                        <h3 class="text-uppercase balance-box__item-subheader">Całkowita suma przychodów:</h3>
+                        <div class="box balance-box__sum">
+                            <span id="allIncomesSum"> zł</span> 
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <img class="img-fluid" src="img/ECONOMY_ANALYSIS.png" alt="budżet domowy" />
+                </div>
+
+                <!-- Total balance -->
+                <div class="box balance-box mt-5" style="background-color: #EAEAEB;">
+                    <h3 class="balance-subheader pb-2">Twój całkowity bilans wynosi:</h3>
+                    <div class="box balance-box__sum mb-2" style="font-size: 24px;">
+                        
+                        <span id="balanceSum" type="number" step="0.01"> zł</span>
+                        
+                    </div>
+                    <h4 class="text-center mt-4">
+
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

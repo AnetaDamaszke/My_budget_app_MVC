@@ -44,7 +44,7 @@ body {
 }
 
 .body-container {
-    height: calc(100vh - 108px);
+    min-height: calc(100vh - 108px);
 }
 
 .font-weight-bold {
