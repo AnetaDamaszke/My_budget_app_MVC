@@ -23,7 +23,7 @@ class Balance extends Authenticated
     }
 
     /**
-     * Show the balance page
+     * Show the balance page with choosing dates
      */
     public function showAction()
     {
@@ -68,7 +68,8 @@ class Balance extends Authenticated
                 'user' => Auth::getUser(),
                 'title' => $title,
                 'date1' => $date1,
-                'date2' => $date2
+                'date2' => $date2,
+                'totalIncomes' => TotalBalance::totalIncomesSum($date1, $date2)
             ]);
     }
 }

@@ -58,7 +58,7 @@ use \App\Auth;
         $db = static::getDB();
         $stmt = $db->prepare($sql); 
 
-        $stmt->execute();;
+        $stmt->execute();
 
         return $stmt->fetchColumn();
     }
