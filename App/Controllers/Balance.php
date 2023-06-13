@@ -69,7 +69,8 @@ class Balance extends Authenticated
                 'title' => $title,
                 'date1' => $date1,
                 'date2' => $date2,
-                'totalIncomes' => TotalBalance::totalIncomesSum($date1, $date2)
+                'totalIncomes' => TotalBalance::totalIncomesSum($date1, $date2),
+                'totalExpenses' => TotalBalance::totalExpensesSum($date1, $date2)
             ]);
     }
 }
