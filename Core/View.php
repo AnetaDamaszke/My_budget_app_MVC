@@ -51,6 +51,7 @@ use \App\Flash;
             $twig->addGlobal('income_category', \App\Models\Income::getIncomeCategoryAssignedToUserName());
             $twig->addGlobal('expense_category', \App\Models\Expense::getExpenseCategoryAssignedToUserName());
             $twig->addGlobal('payment_method', \App\Models\Expense::getPaymentMethodsAssignedToUserName());
+            $twig->addGlobal('balance_title', \App\Models\TotalBalance::chooseDates());
         }
 
         return $twig->render($template, $args);
