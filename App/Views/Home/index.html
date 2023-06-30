@@ -33,7 +33,31 @@
         </section>
 
     {% else %}
-        <a href="/signup/new">Zarejestruj się</a> lub <a href="/login">Zaloguj</a>
+         <section class="registration">
+            <div class="container">
+                <div class="intro">
+                    <h1 class="text-center intro-header">Zyskaj kontrolę nad swoim budżetem</h1>
+                    <p class="text-center intro-text">Notowanie wydatków i przychodów pozwoli spojrzeć na własne finanse z szerszej perspektywy. Załóż konto, przeglądaj bilans i zapanuj nad swoim portfelem!</p>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="registration-box">
+                                <h2 class="text-center text-uppercase registration-header">Nie masz konta? Zarejestruj się:</h2>
+                                <a class="btn text-uppercase text-white form-button" href="/signup/new">Rejestracja</a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="registration-box">
+                                <h2 class="text-center text-uppercase registration-header">Masz konto? Zaloguj się:</h2>
+                                <a class="btn text-uppercase text-white form-button__secondary" href="/login">Logowanie</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-auto col-7">
+                    <img class="img-fluid align-self-end registration-img" src="img/BUDGETTING.png" alt="budżet domowy">
+                </div>
+            </div>
+        </section>
     {% endif %}
 </div>
 
