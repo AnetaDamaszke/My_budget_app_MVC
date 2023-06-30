@@ -48,9 +48,66 @@ use \App\Auth;
 
         $stmt->execute();
 
-        $totalIncomes = $stmt->fetchColumn();
+        $totalExpenses = $stmt->fetchColumn();
 
-        return $totalIncomes;
+        return $totalExpenses;
+    }
+
+    /**
+     * Getting user income category
+     */
+    public static function getUserIncomesCategory() {
+
+        $incomeCategoryId = $category->id;
+
+        $sql = "SELECT * FROM incomes 
+        WHERE income_category_assigned_to_user_id='$incomeCategoryId' 
+        AND date_of_income BETWEEN '$date1' AND '$date2'";
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql); 
+        $stmt->execute();
+
+        $userIncomesCategory = $stmt->fetchColumn();
+
+        return $userIncomesCategory;
+    }
+
+    /**
+     * Sum incomes in category
+     */
+    public static function sumIncomesInCategory($date1, $date2, $incomeCategoryId) {
+
+        $sql = "SELECT SUM(amount) FROM incomes WHERE income_category_assigned_to_user_id='$incomeCategoryId' 
+        AND date_of_income BETWEEN '$date1' AND '$date2'";
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql); 
+        $stmt->execute();
+
+        $sumIncomesInCategory = $stmt->fetchColumn();
+
+        return $sumIncomesInCategory;
+    }
+
+    /**
+     * Get incomes
+     */
+    public static function getIncome() {
+
+        $userId = Auth::getUserId();
+
+        $sql = "SELECT *
+        FROM incomes 
+        WHERE user_id='$userId'";
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql); 
+        $stmt->execute();
+
+        $incomes = $stmt->fetchAll();
+
+        return $incomes;
     }
    
  }

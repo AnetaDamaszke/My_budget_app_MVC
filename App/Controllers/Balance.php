@@ -64,13 +64,24 @@ class Balance extends Authenticated
             $_SESSION['message'] = 'Zaznacz zakres dat!';
         }
 
+        $totalIncomes = TotalBalance::totalIncomesSum($date1, $date2);
+        $totalExpenses = TotalBalance::totalExpensesSum($date1, $date2);
+        $totalBalance = $totalIncomes - $totalExpenses;
+
+        $incomeCategoryId = '';
+  
+        $sumIncomesInCategory = TotalBalance::sumIncomesInCategory($date1, $date2, $incomeCategoryId);
+
         View::renderTemplate('Balance/index.html', [
                 'user' => Auth::getUser(),
                 'title' => $title,
                 'date1' => $date1,
                 'date2' => $date2,
-                'totalIncomes' => TotalBalance::totalIncomesSum($date1, $date2),
-                'totalExpenses' => TotalBalance::totalExpensesSum($date1, $date2)
+                'totalIncomes' => $totalIncomes,
+                'totalExpenses' => $totalExpenses,
+                'totalBalance' => $totalBalance,
+                'incomeCategoryId' => $incomeCategoryId,
+                'sumIncomesInCategory' => $sumIncomesInCategory
             ]);
     }
 }

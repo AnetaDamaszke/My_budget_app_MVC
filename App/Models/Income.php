@@ -66,11 +66,11 @@ use \App\Auth;
     /**
      * Get income category name assigned to user from database
      */
-    public static function getIncomeCategoryAssignedToUserName()
+    public static function getIncomeCategoryAssignedToUser()
     {
         $userId = Auth::getUserId();
 
-        $sql = "SELECT category_name
+        $sql = "SELECT *
         FROM incomes_category_assigned_to_users 
         WHERE user_id='$userId'";
 
@@ -79,6 +79,6 @@ use \App\Auth;
 
         $stmt->execute();
 
-        return $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+        return $stmt->fetchColumn();
     }
 }

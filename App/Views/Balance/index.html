@@ -81,30 +81,43 @@
                 <div class="box balance-box" style="background-color: #99DDCC;">
                     <div class="accordion" id="accordionIncomeBalance01">
                         <div class="accordion-item">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="heading0'.$number.'">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse0'.$number.'" aria-expanded="true" aria-controls="collapse0'.$number.'">
-                                        <span class="">kategoria</span>
-                                    </button>
-                                </h2>
-                            </div>
-                            <div id="collapse0'.$number.'" class="accordion-collapse collapse" aria-labelledby="heading0'.$number.'" data-bs-parent="#accordionBalance0'.$number.'">
-                                <div class="accordion-body text-center">
-                                    <table>
-                                        <tr>
-                                            <td class="accordion__bold-text"></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr> 
-                                        <tr>
-                                            <td colspan="2" class="accordion__bold-text">Suma:</td>
-                                            <td class="accordion__sum">
-                                                <span id="incomes1Sum"></span> zł
-                                            </td>
-                                        </tr>
-                                    </table>
+                            {% set number = 0 %}
+                            {% for category in income_category %}
+                                {% if sumIncomesInCategory > 0 %}
+                                {% set number = number + 1 %}              
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="heading0{{ number }}">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" 
+                                        data-bs-target="#collapse0{{ number }}" aria-expanded="true" 
+                                        aria-controls="collapse0{{ number }}">
+                                            
+                                            <span class="">{{ category.category_name }}</span>
+                                            
+                                        </button>
+                                    </h2>
                                 </div>
-                            </div>
+                                <div id="collapse0{{ number }}" class="accordion-collapse collapse" 
+                                aria-labelledby="heading0{{ number }}" data-bs-parent="#accordionBalance0{{ number }}">
+                                    <div class="accordion-body text-center">
+                                        <table>
+                                            {% for income in incomes %}
+                                            <tr>
+                                                <td class="accordion__bold-text">{{ income.income_comment }}</td>
+                                                <td>{{ income.date_of_income }}</td>
+                                                <td>{{ income.amount }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                            <tr>
+                                                <td colspan="2" class="accordion__bold-text">Suma:</td>
+                                                <td class="accordion__sum">
+                                                    <span id="incomes1Sum"></span>{{ sumIncomesInCategory }} zł
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            {% endfor %}
                         </div>  
                     </div>
                     <div class="d-flex mt-4">
@@ -122,10 +135,8 @@
                 <!-- Total balance -->
                 <div class="box balance-box mt-5" style="background-color: #EAEAEB;">
                     <h3 class="balance-subheader pb-2">Twój całkowity bilans wynosi:</h3>
-                    <div class="box balance-box__sum mb-2" style="font-size: 24px;">
-                        
-                        <span id="balanceSum" type="number" step="0.01"> zł</span>
-                        
+                    <div class="box balance-box__sum mb-2" style="font-size: 24px;">                     
+                        <span id="balanceSum" type="number" step="0.01">{{ totalBalance }} zł</span>         
                     </div>
                     <h4 class="text-center mt-4">
 
@@ -136,4 +147,10 @@
     </div>
 </section>
 
+{% endblock %}
+
+{% block footer %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" 
+integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" 
+crossorigin="anonymous"></script>
 {% endblock %}
