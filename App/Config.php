@@ -39,4 +39,14 @@ namespace App;
      * Secret key for hashing
      */
     const SECRET_KEY = 'canUeGOPhLQ6BX6aC5GdwxSLrSTCJSIM';
+
+    /**
+     * PHP Mailer username
+     */
+    const PHPMAILER_USER = 'aneta.damaszke.programista@gmail.com';
+
+    /**
+     * PHP Mailer password
+     */
+    const PHPMAILER_PASSWORD = 'wcwbuqvkkbbzlkhb';
  }
