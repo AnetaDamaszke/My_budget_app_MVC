@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+
+<div class="text-center">
+
+    {% if current_user %}
+
+        <!-- User menu -->
+        <section class="user-menu">
+                <h1 class="mb-4">Witaj {{ current_user.name }}!</h1>
+                <div class="m-auto user-menu__box">
+                    <a href="/incomes/add" class="btn d-block text-uppercase user-menu__button" type="button">
+                        Dodaj przychód
+                    </a>
+                    <a href="/expenses/add" class="btn d-block text-uppercase user-menu__button" type="button">
+                        Dodaj wydatek
+                    </a>
+                    <a href="/balance/new" class="btn d-block text-uppercase user-menu__button" type="button">
+                        Zobacz bilans
+                    </a>
+                    <div class="py-2"></div>
+                    <a href="#" class="btn d-block text-uppercase user-menu__button" type="button">
+                        Ustawienia konta
+                    </a>
+                    <a href="/logout" class="btn d-block text-uppercase user-menu__button" type="button">
+                        Wyloguj się
+                    </a>
+                </div>
+                <img class="img-fluid user-menu__img" src="img/REBUILD_THE_ECONOMY.png" alt="budżet domowy" />
+        </section>
+
+    {% else %}
+         <section class="registration">
+            <div class="container">
+                <div class="intro">
+                    <h1 class="text-center intro-header">Zyskaj kontrolę nad swoim budżetem</h1>
+                    <p class="text-center intro-text">Notowanie wydatków i przychodów pozwoli spojrzeć na własne finanse z szerszej perspektywy. Załóż konto, przeglądaj bilans i zapanuj nad swoim portfelem!</p>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="registration-box">
+                                <h2 class="text-center text-uppercase registration-header">Nie masz konta? Zarejestruj się:</h2>
+                                <a class="btn text-uppercase text-white form-button" href="/signup/new">Rejestracja</a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="registration-box">
+                                <h2 class="text-center text-uppercase registration-header">Masz konto? Zaloguj się:</h2>
+                                <a class="btn text-uppercase text-white form-button__secondary" href="/login">Logowanie</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-auto col-7">
+                    <img class="img-fluid align-self-end registration-img" src="img/BUDGETTING.png" alt="budżet domowy">
+                </div>
+            </div>
+        </section>
+    {% endif %}
+</div>
+
+{% endblock %}

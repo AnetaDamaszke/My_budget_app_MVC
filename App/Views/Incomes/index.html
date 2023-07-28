@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Incomes{% endblock %}
+
+{% block body %}
+
+<!-- Add Income -->
+
+<section class="add">
+    <h1 class="text-center add-header">Dodaj przychód</h1>
+
+            <div class="add-box mx-auto">
+                <form method="post" action="/incomes/addNew">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group w-100">
+                                <label for="incomeValue" class="form-control-label mb-2">Kwota w PLN</label>
+                                <input name="incomeValue" type="number" min="0.1" step="0.1" placeholder="np. 500.00" class="form-control"/>
+                            </div>
+                        </div> 
+                        <div class="col-md-6">
+                            <div class="form-group w-100">
+                                <label for="incomeDate" class="form-check-label d-block mb-2">Data</label>
+                                <input id="incomeDate" name="incomeDate" type="date" class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <div id="categoryCheck" class="form-check">
+                                <label class="form-check-label d-block mb-2">Kategoria:</label>
+                                <select name="category" class="w-100">
+                                    <option selected="selected">Wybierz:</option>
+                                    {% for name in income_category %}
+                                        <option>{{ name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group pt-4">
+                            <label for="comment" class="form-control-label d-block mb-2">Komentarz (opcjonalnie)</label>
+                            <input name="comment" class="form-control d-block w-100 p-3" />
+                        </div>
+                    </div>
+                    <div class="row pt-2 pb-2">
+                        <div class="m-auto col-md-6">
+                            <button id="addIncomeBtn" type="submit" class="btn form-button">Dodaj</button>
+                        </div>
+                    </div> 
+                </form>
+            </div>
+            <div class="text-center" style="margin-bottom: -19px;">
+                <img class="img-fluid align-self-end mx-auto add-img" src="/img/INCOME_INEQUALITY.png" alt="budżet domowy" />
+            </div>
+            
+
+</section>
+
+{% endblock %}

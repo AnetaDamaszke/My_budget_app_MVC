@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="description" content="Project for course">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <title>{% block title %}{% endblock %}</title>
+        <script src="https://www.google.com/recaptcha/enterprise.js?render=<?php echo $site_key;?>"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" 
+        crossorigin="anonymous"></script>
+        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Concert+One&family=Raleway:wght@300;400;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/custom.css">
+    </head>
+    <body>
+
+        <!-- Navbar -->
+        <nav class="nav navbar navbar-light navbar-expand-md menu">
+            <div class="container">
+                <a class="navbar-brand" href="/">
+                    <img class="menu-logo" src="/img/MYBUDGET.svg" alt="logo" />
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navContent">
+                    {% if current_user %}
+                    <div class="navbar-nav">
+                        <a href="/" class="nav-item nav-link menu-link">Menu</a>
+                        <a href="/logout" class="nav-item nav-link ms-2 ms-lg-3 menu-link">Wyloguj</a>
+                    </div>
+                    {% else %}
+                    <div class="navbar-nav">
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+
+        <div class="body-container">
+
+            {% for message in flash_messages %}
+                <div class="text-center alert alert-{{ message.type }}">
+                    {{ message.body }}
+                </div>
+            {% endfor %}
+            
+            {% block body %}
+            {% endblock %}
+        </div>
+
+        
+
+        <!-- Footer -->
+        <footer class="text-white site-footer">
+            <div class="container">
+                <div class="row pb-3">
+                    <div class="col-md-6 pt-3 text-center text-md-start">
+                        <img class="" src="/img/MYBUDGET_FOOTER.svg" alt="logo" />
+                    </div>
+                    <div class="col-md-6 pt-3 text-center text-md-end">
+                        Designed by Aneta Damaszke 2023
+                    </div>
+                    
+                </div>
+            </div>
+        </footer>
+
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js" 
+        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" 
+        crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+
+        {% block footer %}
+        {% endblock %}
+        
+    </body>
+</html>
