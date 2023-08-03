@@ -14,13 +14,20 @@ use \App\Models\Expense;
 
 class Expenses extends Authenticated
 {
+
+    protected function before()
+    {
+        parent::before();
+        $this->user = Auth::getUserId();
+    }
+
     /**
      * Show the expenses page
      */
     public function addAction()
     {
         View::renderTemplate('Expenses/index.html', [
-            'user' => Auth::getUser()
+            'user' => $this->user
         ]);
     }
 
@@ -31,7 +38,7 @@ class Expenses extends Authenticated
     {
         $expense = new Expense($_POST);   
 
-        if($expense->addExpense()) {
+        if($expense->addExpense($this->user)) {
 
             View::renderTemplate('Expenses/success.html');
 

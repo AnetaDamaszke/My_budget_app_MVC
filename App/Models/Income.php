@@ -27,10 +27,8 @@ use \App\Auth;
     /**
      * Add new income to table in database
      */
-    public function addIncome()
+    public function addIncome($userId)
     {   
-        $userId = Auth::getUserId();
-
         $categoryId = Income::getIncomeCategoryId($this->category, $userId);
 
         $sql = 'INSERT INTO incomes VALUES (NULL, :userid, :categoryid, :value, :date, :comment)';
@@ -87,8 +85,6 @@ use \App\Auth;
      */
     public static function getIncomeBalance($userId, $startDate, $endDate)
     {
-        $userId = Auth::getUserId();
-
         $sql = 'SELECT *, SUM(amount) AS incomeSum FROM incomes, incomes_category_assigned_to_users
         WHERE incomes.income_category_assigned_to_user_id = incomes_category_assigned_to_users.id
         AND incomes.user_id = :userId AND incomes.date_of_income BETWEEN :startDate AND :endDate
@@ -109,8 +105,6 @@ use \App\Auth;
      */
     public static function getIncomesInCategory($userId, $startDate, $endDate)
     {
-        $userId = Auth::getUserId();
-
         $sql = 'SELECT * FROM incomes
         WHERE incomes.user_id = :userId AND incomes.date_of_income BETWEEN :startDate AND :endDate';
 

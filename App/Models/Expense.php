@@ -27,10 +27,8 @@ use \App\Auth;
     /**
      * Add new expense to table in database
      */
-    public function addExpense()
+    public function addExpense($userId)
     {   
-        $userId = Auth::getUserId();
-
         $categoryId = Expense::getExpenseCategoryId($this->category, $userId);
         $paymentMethodId = Expense::getPaymentMethodId($this->payment, $userId);
 
@@ -124,8 +122,6 @@ use \App\Auth;
      */
     public static function getExpenseBalance($userId, $startDate, $endDate)
     {
-        $userId = Auth::getUserId();
-
         $sql = 'SELECT *, SUM(amount) AS expenseSum FROM expenses, expenses_category_assigned_to_users
         WHERE expenses.expense_category_assigned_to_user_id = expenses_category_assigned_to_users.id
         AND expenses.user_id = :userId AND expenses.date_of_expense BETWEEN :startDate AND :endDate
@@ -146,8 +142,6 @@ use \App\Auth;
      */
     public static function getExpensesInCategory($userId, $startDate, $endDate)
     {
-        $userId = Auth::getUserId();
-
         $sql = 'SELECT * FROM expenses
         WHERE expenses.user_id = :userId AND expenses.date_of_expense BETWEEN :startDate AND :endDate';
 
@@ -166,8 +160,6 @@ use \App\Auth;
      */
     public static function getExpenseData($userId, $startDate, $endDate)
     {
-        $userId = Auth::getUserId();
-
         $sql = 'SELECT SUM(amount) AS expenseSum, category_name FROM expenses, expenses_category_assigned_to_users
         WHERE expenses.expense_category_assigned_to_user_id = expenses_category_assigned_to_users.id
         AND expenses.user_id = :userId AND expenses.date_of_expense BETWEEN :startDate AND :endDate

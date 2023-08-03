@@ -67,7 +67,7 @@ class Balance extends Authenticated
         $incomesInCategory = Income::getIncomesInCategory($userId, $startDate, $endDate);
         $expensesInCategory = Expense::getExpensesInCategory($userId, $startDate, $endDate);
 
-        $dataChart[] = Expense::getExpenseData($userId, $startDate, $endDate);
+        $dataChart = Expense::getExpenseData($userId, $startDate, $endDate);
 
         View::renderTemplate('Balance/index.html', [
                 'user' => $this->user,

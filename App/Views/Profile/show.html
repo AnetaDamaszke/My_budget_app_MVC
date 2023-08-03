@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Profil{% endblock %}
+
+{% block body %}
+
+<div class="pt-5 text-center">
+    <h1>Profil użytkownika</h1>
+
+    <div>Imię: {{ user.name }}</div>
+    <div>E-mail: {{ user.email }}</div>
+
+    <a href="/profile/edit">Edytuj dane użytkownika</a>
+    <a href="/profile/deleteUser">Usuń konto</a>
+
+    <div class="pt-3 text-center">
+        <label class="form-check-label d-block mb-2">Kategorie przychodów użytkownika:</label>
+        <a href="/profile/incomes">Dodaj nową</a>
+        <table>
+            {% for name in income_category %}
+            <tr>
+                <td>{{ name }}</td>
+                <td><a href="/profile/editInCat?name={{ name }}">Edytuj</a></td>
+                <td><a href="/profile/deleteInCat?name={{ name }}">Usuń</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div id="categoryCheck" class="pt-3 text-center">
+        <label class="form-check-label d-block mb-2">Kategorie wydatków użytkownika:</label>
+        <a href="/profile/expenses">Dodaj nową</a>
+        <table>
+            {% for name in expense_category %}
+            <tr>
+                <td>{{ name }}</td>
+                <td><a href="/profile/editExCat?name={{ name }}">Edytuj</a></td>
+                <td><a href="/profile/deleteExCat?name={{ name }}">Usuń</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}

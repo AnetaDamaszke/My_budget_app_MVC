@@ -45,7 +45,7 @@ use \App\Flash;
         }
     }
 
-    /**
+     /**
      * Before filter - called before an action method.
      */
     protected function before() 

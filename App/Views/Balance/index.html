@@ -74,8 +74,7 @@
                             <script>
                                 window.onload = function() {
                                         
-                                        var data = {{ dataChart|json_encode(constant('JSON_PRETTY_PRINT'))|raw }};
-                                        var table = data[0];
+                                        var table = {{ dataChart|json_encode(constant('JSON_PRETTY_PRINT'))|raw }};           
                                         var labels = [];
                                         var values = [];
                                         var rowCount = {{ number }};

@@ -4,8 +4,11 @@ namespace App\Models;
 
 use PDO;
 use \App\Token;
+use \App\Auth;
 use \App\Mail;
 use \Core\View;
+use \App\Models\Income;
+use \App\Models\Expense;
 
 /**
  * User model
@@ -406,5 +409,175 @@ use \Core\View;
       $stmt -> bindValue(':username', $this->name, PDO::PARAM_STR);
       
       return $stmt -> execute();
+    }
+
+    public function updateProfile($data) {
+
+      $this->name = $data['name'];
+      $this->email = $data['email'];
+
+      if ($data['password'] != '') {
+        $this->password = $data['password'];
+      }
+
+      $this->validate();
+
+      if (empty($this->errors)) {
+
+        $sql = 'UPDATE users
+                SET name = :name,
+                email = :email';
+                
+        if (isset($this->password)) {
+          $sql .= ', password_hash = :password_hash';
+        }
+
+        $sql .="\nWHERE id = :id";
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':name', $this->name, PDO::PARAM_STR);
+        $stmt->bindValue(':email', $this->email, PDO::PARAM_STR);
+        $stmt->bindValue(':id', $this->id, PDO::PARAM_INT);
+
+        if (isset($this->password)) {
+          $password_hash = password_hash($this->password, PASSWORD_DEFAULT);
+          $stmt->bindValue(':password_hash', $password_hash, PDO::PARAM_STR);
+        }
+
+        return $stmt -> execute();
+      }
+
+      return false;
+
+    }
+
+    /**
+     * Add new incomes category
+     */
+    public function addNewIncomesCategory($category)
+    {
+        $sql = 'INSERT INTO incomes_category_assigned_to_users (user_id, category_name)
+                VALUES (:id, :name)';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':id', $this->id, PDO::PARAM_INT);
+        $stmt->bindValue(':name', $category, PDO::PARAM_STR);
+
+         return $stmt->execute();
+    }
+
+    /**
+     * Add new expenses category
+     */
+    public function addNewExpensesCategory($category)
+    {
+        $sql = 'INSERT INTO expenses_category_assigned_to_users (user_id, category_name)
+                VALUES (:id, :name)';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':id', $this->id, PDO::PARAM_INT);
+        $stmt->bindValue(':name', $category, PDO::PARAM_STR);
+
+         return $stmt->execute();
+    }
+
+    /**
+     * Delete user from database
+     */
+    public function deleteUserFromaDataBase() 
+    {
+      $sql = "DELETE FROM users, expenses, incomes, expenses_category_assigned_to_users,
+      incomes_category_assigned_to_users, payment_methods_assigned_to_users
+      USING users
+      INNER JOIN expenses
+      INNER JOIN incomes
+      INNER JOIN expenses_category_assigned_to_users
+      INNER JOIN incomes_category_assigned_to_users
+      INNER JOIN payment_methods_assigned_to_users
+      WHERE users.id = '$this->id'
+      AND expenses.user_id = '$this->id'
+      AND incomes.user_id = '$this->id'
+      AND expenses_category_assigned_to_users.user_id = '$this->id'
+      AND incomes_category_assigned_to_users.user_id = '$this->id'
+      AND payment_methods_assigned_to_users.user_id = '$this->id'";
+
+      $db = static::getDB();
+      $stmt = $db->prepare($sql);
+
+      return $stmt->execute();
+    }
+
+    /**
+     * Delete incomes category
+     */
+    public function deleteIncomesCategory()
+    {
+        $categoryName = $_GET['name'];
+
+        $sql = "DELETE FROM incomes_category_assigned_to_users
+                WHERE category_name = '$categoryName'";
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+         return $stmt->execute();
+    }
+
+    /**
+     * Delete expenses category
+     */
+    public function deleteExpensesCategory()
+    {
+        $categoryName = $_GET['name'];
+
+        $sql = "DELETE FROM expenses_category_assigned_to_users
+                WHERE category_name = '$categoryName'";
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+         return $stmt->execute();
+    }
+
+    /**
+     * Edit expenses category name
+     */
+    public function editExpensesCategory($categoryName, $newName)
+    {
+        $userId = Auth::getUserId();
+        $categoryId = Expense::getExpenseCategoryId($categoryName, $userId);
+
+        $sql = "UPDATE expenses_category_assigned_to_users
+        SET category_name = '$newName'
+        WHERE id = '$categoryId'";
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+         return $stmt->execute();
+    }
+
+    /**
+     * Edit incomes category name
+     */
+    public function editIncomesCategory($categoryName, $newName)
+    {
+      $userId = Auth::getUserId();
+      $categoryId = Income::getIncomeCategoryId($categoryName, $userId);
+
+      $sql = "UPDATE incomes_category_assigned_to_users
+      SET category_name = '$newName'
+      WHERE id = '$categoryId'";
+
+      $db = static::getDB();
+      $stmt = $db->prepare($sql);
+
+       return $stmt->execute();
     }
 }

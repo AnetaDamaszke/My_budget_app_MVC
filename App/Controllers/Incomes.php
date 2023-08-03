@@ -14,13 +14,19 @@ use \App\Models\Income;
 
 class Incomes extends Authenticated
 {
+    protected function before()
+    {
+        parent::before();
+        $this->user = Auth::getUserId();
+    }
+
     /**
      * Show the incomes page
      */
     public function addAction()
     {
         View::renderTemplate('Incomes/index.html', [
-            'user' => Auth::getUser()
+            'user' => $this->user
         ]);
     }
 
@@ -29,9 +35,9 @@ class Incomes extends Authenticated
      */
     public function addNewAction()
     {
-        $income = new Income($_POST);   
+        $income = new Income($_POST);
 
-        if($income->addIncome()) {
+        if($income->addIncome($this->user)) {
 
             View::renderTemplate('Incomes/success.html');
 

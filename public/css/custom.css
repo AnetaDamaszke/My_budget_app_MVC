@@ -192,6 +192,7 @@ body {
 
 .form-control-label {
     margin-bottom: .35rem;
+    font-weight: 600;
 }
 
 .form-control {
@@ -635,7 +636,7 @@ input:checked ~ .checkmark {
 }
 
 .error {
-    color: red;
+    color: #ad1a3b;
     margin-top: 10px;
     margin-bottom: 10px;
 }
