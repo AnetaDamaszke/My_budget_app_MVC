@@ -4,19 +4,21 @@
 
 {% block body %}
 
-<div class="pt-5 text-center">
-    <h1>Dodaj nową kategorię przychodów</h1>
-    <form method="post" action="/profile/addIncomesCategory">
-        <div class="form-group">
-            <label for="categoryName" class="form-control-label">Nazwa</label>
-            <input type="text" name="category" id="categoryName"class="form-control" required/>
-        </div>
-        <div class="text-center">
-            <button type="submit" class="btn text-uppercase text-white form-button">Dodaj</button>
-            <button type="submit" class="btn text-uppercase text-white form-button">Anuluj</button>
-        </div>        
-    </form>  
 
+<div class="pt-5 text-center">
+    <div class="profile-input m-auto">
+        <h1 class="mb-3">Dodaj nową kategorię przychodów</h1>
+        <form method="post" action="/profile/addIncomesCategory">
+            <div class="form-group">
+                <label for="categoryName" class="form-control-label">Podaj nazwę nowej kategorii:</label>
+                <input type="text" name="category" id="categoryName"class="form-control" required/>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn pg-button">Dodaj</button>
+                <button type="submit" class="btn pg-button__secondary">Anuluj</button>
+            </div>         
+        </form>  
+    </div>
 </div>
 
 {% endblock %}

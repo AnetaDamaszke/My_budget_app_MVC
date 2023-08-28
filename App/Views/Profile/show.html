@@ -5,40 +5,50 @@
 {% block body %}
 
 <div class="pt-5 text-center">
+
     <h1>Profil użytkownika</h1>
 
-    <div>Imię: {{ user.name }}</div>
-    <div>E-mail: {{ user.email }}</div>
+    <div class="add-box">
 
-    <a href="/profile/edit">Edytuj dane użytkownika</a>
-    <a href="/profile/deleteUser">Usuń konto</a>
+        <div class="mb-4 light__box">
+            <div class="mb-1">Imię: {{ user.name }}</div>
+            <div class="mb-3 ">E-mail: {{ user.email }}</div>
+            <a href="/profile/edit" class="pg-button__small">Edytuj dane</a>
+            <a href="/profile/deleteUser" class="pg-button__small-secondary">Usuń konto</a>
+        </div>
+        
+        <div class="pt-3 mb-4 text-center light__box">
+            <h4 class="mb-2">Kategorie przychodów</h4>
+            <table class="mb-3 profile-table">
+                {% for name in income_category %}
+                <tr class="pb-1 profile-tr">
+                    <td class="profile-td">{{ name }}</td>
+                    <td >
+                        <a href="/profile/editInCat?name={{ name }}" class="pg-button__small">Edytuj</a>
+                        <a href="/profile/deleteInCat?name={{ name }}" class="pg-button__small-secondary">Usuń</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+            <a href="/profile/incomes">Dodaj nową</a>
+        </div>
 
-    <div class="pt-3 text-center">
-        <label class="form-check-label d-block mb-2">Kategorie przychodów użytkownika:</label>
-        <a href="/profile/incomes">Dodaj nową</a>
-        <table>
-            {% for name in income_category %}
-            <tr>
-                <td>{{ name }}</td>
-                <td><a href="/profile/editInCat?name={{ name }}">Edytuj</a></td>
-                <td><a href="/profile/deleteInCat?name={{ name }}">Usuń</a></td>
-            </tr>
-            {% endfor %}
-        </table>
-    </div>
+        <div class="pt-3 text-center light__box">
+            <h4 class="mb-2">Kategorie wydatków</h4>
+            <table class="mb-3 profile-table">
+                {% for name in expense_category %}
+                <tr class="pb-1 profile-tr">
+                    <td class="profile-td">{{ name }}</td>
+                    <td>
+                        <a href="/profile/editExCat?name={{ name }}" class="pg-button__small">Edytuj</a>
+                        <a href="/profile/deleteExCat?name={{ name }}" class="pg-button__small-secondary">Usuń</a>
+                    </td>  
+                </tr>
+                {% endfor %}
+            </table>
+            <a href="/profile/expenses">Dodaj nową</a>
+        </div>
 
-    <div id="categoryCheck" class="pt-3 text-center">
-        <label class="form-check-label d-block mb-2">Kategorie wydatków użytkownika:</label>
-        <a href="/profile/expenses">Dodaj nową</a>
-        <table>
-            {% for name in expense_category %}
-            <tr>
-                <td>{{ name }}</td>
-                <td><a href="/profile/editExCat?name={{ name }}">Edytuj</a></td>
-                <td><a href="/profile/deleteExCat?name={{ name }}">Usuń</a></td>
-            </tr>
-            {% endfor %}
-        </table>
     </div>
 
 </div>

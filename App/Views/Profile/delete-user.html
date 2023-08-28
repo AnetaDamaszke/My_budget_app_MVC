@@ -6,14 +6,15 @@
 
 <div class="pt-5 text-center">
     <h1>Usuwanie konta</h1>
-    <form method="post" action="/profile/deleteUserFromaDataBase">
-        <h3 class="text-center">Czy na pewno chcesz usunąć konto użytkownika i wszystkie dane?</h3>
-        <div class="text-center">
-            <button type="submit" class="btn text-uppercase text-white form-button">Usuń</button>
-            <a href="/profile/show" type="submit" class="btn text-uppercase text-white form-button">Anuluj</a>
-        </div>        
-    </form>  
-
+    <div class="profile-input m-auto">
+        <h3 class="text-center">Czy na pewno chcesz usunąć konto użytkownika i wszystkie dane z bazy danych?</h3>
+        <form method="post" action="/profile/deleteUserFromaDataBase">
+            <div class="text-center">
+                <button type="submit" class="btn pg-button">Usuń</button>
+                <a href="/profile/show" type="submit" class="btn pg-button__secondary">Anuluj</a>
+            </div>        
+        </form>  
+    </div>
 </div>
 
 {% endblock %}

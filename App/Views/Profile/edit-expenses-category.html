@@ -5,15 +5,17 @@
 {% block body %}
 
 <div class="pt-5 text-center">
-    <h1>Edytuj nazwę kategorii</h1>
-    <form method="post" action="/profile/editExpensesCategory?name={{ name }}">
-        <input type="text" name="input" class="form-control" required/>
-        <div class="text-center">
-            <button type="submit" class="btn text-uppercase text-white form-button">Zapisz</button>
-            <a href="/profile/show" type="submit" class="btn text-uppercase text-white form-button">Anuluj</a>
-        </div>        
-    </form>  
-
+    <div class="profile-input m-auto">
+        <h1 class="mb-3">Edytuj nazwę kategorii <span style="font-weight: 600;">{{ name }}</span></h1>
+        <p class="mb-1">Wpisz nową nazwę:</p>
+        <form method="post" action="/profile/editExpensesCategory?name={{ name }}">
+            <input type="text" name="input" class="form-control mb-3" required/>
+            <div class="text-center">
+                <button type="submit" class="btn pg-button">Zapisz</button>
+                <a href="/profile/show" type="submit" class="btn pg-button__secondary">Anuluj</a>
+            </div>        
+        </form>  
+    </div>
 </div>
 
 {% endblock %}

@@ -61,6 +61,7 @@ class Balance extends Authenticated
 
         $startDate = $dateRange['start_date'];
         $endDate = $dateRange['end_date'];
+        $title = $dateRange['title'];
 
         $incomeBalance = Income::getIncomeBalance($userId, $startDate, $endDate);
         $expenseBalance = Expense::getExpenseBalance($userId, $startDate, $endDate);
@@ -77,7 +78,8 @@ class Balance extends Authenticated
                 'incomes_in_category' => $incomesInCategory,
                 'expense_balance' => $expenseBalance,
                 'expenses_in_category' => $expensesInCategory,
-                'dataChart' => $dataChart
+                'dataChart' => $dataChart,
+                'title' => $title
             ]);
     }
 }

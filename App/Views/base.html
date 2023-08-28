@@ -29,7 +29,19 @@
                 <div class="collapse navbar-collapse justify-content-end" id="navContent">
                     {% if current_user %}
                     <div class="navbar-nav">
-                        <a href="/" class="nav-item nav-link menu-link">Menu</a>
+                        <a href="/incomes/add" class="nav-item nav-link ms-2 ms-lg-3 menu-link">
+                            Dodaj przychód
+                        </a>
+                        <a href="/expenses/add" class="nav-item nav-link ms-2 ms-lg-3 menu-link">
+                            Dodaj wydatek
+                        </a>
+                        <a href="/balance/new" class="nav-item nav-link ms-2 ms-lg-3 menu-link">
+                            Zobacz bilans
+                        </a>
+                        <div class="py-2"></div>
+                        <a href="/profile/show" class="nav-item nav-link ms-2 ms-lg-3 menu-link">
+                            Ustawienia konta
+                        </a>
                         <a href="/logout" class="nav-item nav-link ms-2 ms-lg-3 menu-link">Wyloguj</a>
                     </div>
                     {% else %}

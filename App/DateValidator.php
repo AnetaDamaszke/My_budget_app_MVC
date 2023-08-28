@@ -53,11 +53,13 @@ class DateValidator
 
         $dateRange = [
             'start_date' => $date1,
-            'end_date' => $date2
+            'end_date' => $date2,
+            'title' => $title
         ];
 
         $_SESSION['start_date'] = $date1;
         $_SESSION['end_date'] = $date2;
+        $_SESSION['title'] = $title;
 
         return $dateRange;
     }

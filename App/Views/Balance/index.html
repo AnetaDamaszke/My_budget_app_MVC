@@ -193,9 +193,11 @@
                     <div class="box balance-box__sum mb-2" style="font-size: 24px;">                     
                         <span id="balanceSum" type="number" step="0.01">{{ totalBalance | number_format(2, ',', ' ') }} zł</span>         
                     </div>
-                    <h4 class="text-center mt-4">
-
-                    </h4>
+                    {% if totalBalance > 0 %}
+                    <h4 class="text-center mt-4">Gratulacje! Świetnie zarządzasz finansami.</h4>
+                    {% else %}
+                    <h4 class="text-center mt-4">Uważaj! Budżet przekroczony!</h4>
+                    {% endif %}
                 </div>
 
                 <div class="text-center">
