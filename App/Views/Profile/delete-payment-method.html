@@ -6,8 +6,8 @@
 
 <div class="pt-5 text-center">
     <div class="profile-input m-auto">
-        <h3 class="mb-3">Czy na pewno chcesz usunąć kategorię <span style="font-weight: 600;">{{ name }}</span>?</h3>
-        <form method="post" action="/profile/deleteIncomesCategory?name={{ name }}">
+        <h3 class="mb-3">Czy na pewno chcesz usunąć metodę płatności <span style="font-weight: 600;">{{ name }}</span> oraz wszystkie dane?</h3>
+        <form method="post" action="/profile/deletePaymentsMethod?name={{ name }}">
             <div class="text-center">
                 <button type="submit" class="btn pg-button">Usuń</button>
                 <a href="/profile/show" type="submit" class="btn pg-button__secondary">Anuluj</a>

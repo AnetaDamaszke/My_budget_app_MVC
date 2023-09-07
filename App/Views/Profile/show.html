@@ -30,10 +30,10 @@
                 </tr>
                 {% endfor %}
             </table>
-            <a href="/profile/incomes">Dodaj nową</a>
+            <a class="btn pg-button__secondary" href="/profile/incomes">Dodaj nową</a>
         </div>
 
-        <div class="pt-3 text-center light__box">
+        <div class="pt-3 mb-4 text-center light__box">
             <h4 class="mb-2">Kategorie wydatków</h4>
             <table class="mb-3 profile-table">
                 {% for name in expense_category %}
@@ -46,7 +46,23 @@
                 </tr>
                 {% endfor %}
             </table>
-            <a href="/profile/expenses">Dodaj nową</a>
+            <a class="btn pg-button__secondary" href="/profile/expenses">Dodaj nową</a>
+        </div>
+
+        <div class="pt-3 text-center light__box">
+            <h4 class="mb-2">Metody płatności</h4>
+            <table class="mb-3 profile-table">
+                {% for name in payment_method %}
+                <tr class="pb-1 profile-tr">
+                    <td class="profile-td">{{ name }}</td>
+                    <td >
+                        <a href="/profile/editPayMethod?name={{ name }}" class="pg-button__small">Edytuj</a>
+                        <a href="/profile/deletePayMet?name={{ name }}" class="pg-button__small-secondary">Usuń</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+            <a class="btn pg-button__secondary" href="/profile/payments">Dodaj nową</a>
         </div>
 
     </div>

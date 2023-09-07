@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 
-{% block title %}Edit category name{% endblock %}
+{% block title %}Edit payments method{% endblock %}
 
 {% block body %}
 
 <div class="pt-5 text-center">
     <div class="profile-input m-auto">
-        <h3 class="mb-3">Edytuj nazwę kategorii <span style="font-weight: 600;">{{ name }}</span></h3>
+        <h3 class="mb-3">Edytuj nazwę metody płatności <span style="font-weight: 600;">{{ name }}</span></h3>
         <p class="mb-1">Wpisz nową nazwę:</p>
-        <form method="post" action="/profile/editExpensesCategory?name={{ name }}">
+        <form method="post" action="/profile/editPaymentsMethod?name={{ name }}">
             <input type="text" name="input" class="form-control mb-3"/>
             <div class="text-center">
                 <button type="submit" class="btn pg-button">Zapisz</button>

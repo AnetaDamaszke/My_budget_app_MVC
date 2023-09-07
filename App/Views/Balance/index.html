@@ -58,15 +58,21 @@
                             </div>  
                         </div>
                     </div>
+                    {% if totalExpense > 0 %}          
                     <div class="d-flex mt-4 mb-3">
                         <h3 class="text-uppercase balance-box__item-subheader">Całkowita suma wydatków:</h3>
                         <div class="box balance-box__sum">           
-                            <span id="allExpensesSum">{{ totalExpense | number_format(2, ',', ' ') }} zł</span>
-                               
+                            <span id="allExpensesSum">{{ totalExpense | number_format(2, ',', ' ') }} zł</span>            
                         </div>
                     </div>
+                    {% else %}
+                    <h3 class="text-uppercase text-center balance-box__item-subheader">
+                        Brak wydatków w wybranym okresie.
+                    </h3>
+                    {% endif %}
 
                     <!-- Pie chart -->
+                    {% if totalExpense > 0 %} 
                     <div class="piechart mt-5">
                         <h2 class="text-center balance-subheader">Wykres Twoich wydatków</h2> 
                         <div class="text-center piechart__key mb-5">
@@ -118,11 +124,11 @@
                                             }
                                 })
                             }
-
-                            </script>
-                            
+                            </script>                        
                         </div>
                     </div>
+                    {% else %}
+                    {% endif %}
                 </div>
             </div>
             
@@ -130,10 +136,10 @@
             <div class="col-lg-6 px-3 px-md-5">
             <h2 class="text-uppercase text-center balance-subheader">Przychody</h2>
                 <div class="box balance-box" style="background-color: #99DDCC;">
+                {% set totalIncome = 0 %} 
                     <div class="accordion" id="accordionIncomeBalance01">
                         <div class="accordion-item">
                             {% set number = 0 %}
-                            {% set totalIncome = 0 %}
                             {% for incomes in income_balance %}
                                 {% if incomes.incomeSum is not empty %}
                                 {% set number = number + 1 %}                                             
@@ -176,12 +182,18 @@
                             {% endfor %}
                         </div>  
                     </div>
+                {% if totalIncome > 0 %}
                     <div class="d-flex mt-4">
                         <h3 class="text-uppercase balance-box__item-subheader">Całkowita suma przychodów:</h3>
                         <div class="box balance-box__sum">
                             <span id="allIncomesSum">{{ totalIncome | number_format(2, ',', ' ') }} zł</span> 
                         </div>
                     </div>
+                {% else %}
+                    <h3 class="text-uppercase text-center balance-box__item-subheader">
+                        Brak przychodów w wybranym okresie.
+                    </h3>
+                {% endif %}
                 </div>
 
                 
@@ -195,8 +207,10 @@
                     </div>
                     {% if totalBalance > 0 %}
                     <h4 class="text-center mt-4">Gratulacje! Świetnie zarządzasz finansami.</h4>
-                    {% else %}
+                    {% elseif totalBalance < 0 %}
                     <h4 class="text-center mt-4">Uważaj! Budżet przekroczony!</h4>
+                    {% else %}
+                    <h4 class="text-center mt-4"></h4>
                     {% endif %}
                 </div>
 

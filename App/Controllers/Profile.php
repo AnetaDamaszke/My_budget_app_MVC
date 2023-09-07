@@ -5,6 +5,7 @@ namespace App\Controllers;
 use \Core\View;
 use \App\Auth;
 use \App\Flash;
+use \App\Models\User;
 
 /**
  * Profile controller
@@ -108,6 +109,7 @@ class Profile extends Authenticated
 
             Flash::addMessage('Kategoria została dodana');
             $this->redirect('/profile/show');
+            
         } else {
             View::renderTemplate('Profile/expenses.html', [
                 'user' => $this->user
@@ -118,11 +120,18 @@ class Profile extends Authenticated
     public function deleteInCatAction()
     {
         $categoryName = $_GET['name'];
+        
+        if(User::isIncomesTableEmpty($categoryName) > 0)
+        {
+            Flash::addMessage('UWAGA: W tej kategorii masz zapisane przychody. 
+            Usunięcie kategorii spowoduje usunięcie tych przychodów z bazy danych!', Flash::WARNING);   
+        }
 
         View::renderTemplate('Profile/delete-incomes-category.html', [
             'user' => $this->user,
             'name' => $categoryName
         ]);
+        
     }
 
     public function deleteIncomesCategoryAction()
@@ -142,6 +151,12 @@ class Profile extends Authenticated
     public function deleteExCatAction()
     {
         $categoryName = $_GET['name'];
+        
+        if(User::isExpensesTableEmpty($categoryName) > 0)
+        {
+            Flash::addMessage('UWAGA: W tej kategorii masz zapisane wydatki.
+            Usunięcie kategorii spowoduje usunięcie tych wydatków z bazy danych!', Flash::WARNING);   
+        }
 
         View::renderTemplate('Profile/delete-expenses-category.html', [
             'user' => $this->user,
@@ -154,6 +169,36 @@ class Profile extends Authenticated
         if ($this->user->deleteExpensesCategory()) {
 
             Flash::addMessage('Kategoria została usunięta');
+            $this->redirect('/profile/show');
+
+        } else {
+            View::renderTemplate('Profile/delete-expenses-category.html', [
+                'user' => $this->user
+            ]);
+        }
+    }
+
+    public function deletePayMetAction()
+    {
+        $paymentMethod = $_GET['name'];
+
+        if(User::isPaymentMethodTableEmpty($paymentMethod) > 0)
+        {
+            Flash::addMessage('UWAGA: W tej metody płatności masz przypisane wydatki.
+            Usunięcie kategorii spowoduje usunięcie tych wydatków z bazy danych!', Flash::WARNING);   
+        }
+
+        View::renderTemplate('Profile/delete-payment-method.html', [
+            'user' => $this->user,
+            'name' => $paymentMethod
+        ]);
+    }
+
+    public function deletePaymentsMethodAction()
+    {
+        if ($this->user->deletePaymentsMethod()) {
+
+            Flash::addMessage('Metoda płatności została usunięta');
             $this->redirect('/profile/show');
 
         } else {
@@ -214,4 +259,52 @@ class Profile extends Authenticated
             ]);
         }
     }
+
+    public function paymentsAction()
+    {
+        View::renderTemplate('Profile/payments.html', [
+            'user' => $this->user
+        ]);
+    }
+
+    public function addPaymentsMethodAction()
+    {
+        if ($this->user->addPaymentsMethod($_POST['name'])) {
+
+            Flash::addMessage('Metoda płatności została dodana');
+            $this->redirect('/profile/show');
+            
+        } else {
+            View::renderTemplate('Profile/payments.html', [
+                'user' => $this->user
+            ]);
+        }
+    }
+
+    public function editPayMethodAction()
+    {
+        $paymentsMethodName = $_GET['name'];
+
+        View::renderTemplate('Profile/edit-payment-method.html', [
+            'user' => $this->user,
+            'name' => $paymentsMethodName
+        ]);
+    }
+
+    public function editPaymentsMethodAction()
+    {
+        $paymentsMethodName = $_GET['name'];
+
+        if ($this->user->editPaymentsMethod($paymentsMethodName, $_POST['input'])) {
+
+            Flash::addMessage('Nazwa kategorii została edytowana');
+            $this->redirect('/profile/show');
+
+        } else {
+            View::renderTemplate('Profile/edit-payment-method.html', [
+                'user' => $this->user
+            ]);
+        }
+    }
+    
 }

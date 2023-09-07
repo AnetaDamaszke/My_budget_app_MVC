@@ -9,6 +9,7 @@ use \App\Mail;
 use \Core\View;
 use \App\Models\Income;
 use \App\Models\Expense;
+use \App\Flash;
 
 /**
  * User model
@@ -458,8 +459,14 @@ use \App\Models\Expense;
      */
     public function addNewIncomesCategory($category)
     {
+
+      if(static::validateIncomesCategoryName($category) )
+      {
+        Flash::addMessage('Ta nazwa kategorii przychodu już istnieje! Podaj inną nazwę.', Flash::WARNING);
+        
+      } else {
         $sql = 'INSERT INTO incomes_category_assigned_to_users (user_id, category_name)
-                VALUES (:id, :name)';
+              VALUES (:id, :name)';
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
@@ -467,7 +474,9 @@ use \App\Models\Expense;
         $stmt->bindValue(':id', $this->id, PDO::PARAM_INT);
         $stmt->bindValue(':name', $category, PDO::PARAM_STR);
 
-         return $stmt->execute();
+        return $stmt->execute();
+      }
+      
     }
 
     /**
@@ -475,6 +484,11 @@ use \App\Models\Expense;
      */
     public function addNewExpensesCategory($category)
     {
+      if(static::validateExpensesCategoryName($category) )
+      {
+        Flash::addMessage('Ta nazwa kategorii wydatków już istnieje! Podaj inną nazwę.', Flash::WARNING);
+        
+      } else {
         $sql = 'INSERT INTO expenses_category_assigned_to_users (user_id, category_name)
                 VALUES (:id, :name)';
 
@@ -485,6 +499,93 @@ use \App\Models\Expense;
         $stmt->bindValue(':name', $category, PDO::PARAM_STR);
 
          return $stmt->execute();
+      }
+    }
+
+    /**
+     * Add new payments method
+     */
+    public function addPaymentsMethod($paymentsMethodName)
+    {
+      if(static::validatePaymentMethods($paymentsMethodName) )
+      {
+        Flash::addMessage('Ta nazwa metody płatności już istnieje! Podaj inną nazwę.', Flash::WARNING);
+        
+      } else {
+
+        $userId = Auth::getUserId();
+
+        $sql = 'INSERT INTO payment_methods_assigned_to_users (user_id, name)
+                VALUES (:id, :name)';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':id', $userId, PDO::PARAM_INT);
+        $stmt->bindValue(':name', $paymentsMethodName, PDO::PARAM_STR);
+
+        return $stmt->execute();
+      }
+    }
+
+    /**
+     * Incomes category name validation
+     */
+    public static function validateIncomesCategoryName($categoryName)
+    {
+      $sql = 'SELECT * FROM incomes_category_assigned_to_users
+      WHERE category_name = :name';
+
+      $db = static::getDB();
+      $stmt = $db->prepare($sql);
+      $stmt->bindValue(':name', $categoryName, PDO::PARAM_STR);
+
+      $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+
+      $stmt->execute();
+
+      return $stmt->fetch();
+    }
+
+    /**
+     * Expenses category name validation
+     */
+    public static function validateExpensesCategoryName($categoryName)
+    {
+      $sql = 'SELECT * FROM expenses_category_assigned_to_users
+      WHERE category_name = :name';
+
+      $db = static::getDB();
+      $stmt = $db->prepare($sql);
+      $stmt->bindValue(':name', $categoryName, PDO::PARAM_STR);
+
+      $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+
+      $stmt->execute();
+
+      return $stmt->fetch();
+    }
+
+    /**
+     * Payment methods validation
+     */
+    public static function validatePaymentMethods($categoryName)
+    {
+      $userId = Auth::getUserId();
+
+      $sql = 'SELECT * FROM payment_methods_assigned_to_users
+      WHERE name = :name AND user_id = :id';
+
+      $db = static::getDB();
+      $stmt = $db->prepare($sql);
+      $stmt->bindValue(':name', $categoryName, PDO::PARAM_STR);
+      $stmt->bindValue(':id', $userId, PDO::PARAM_STR);
+
+      $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+
+      $stmt->execute();
+
+      return $stmt->fetch();
     }
 
     /**
@@ -519,6 +620,7 @@ use \App\Models\Expense;
     public function deleteIncomesCategory()
     {
         $categoryName = $_GET['name'];
+        $userId = Auth::getUserId();
 
         $sql = "DELETE FROM incomes_category_assigned_to_users
                 WHERE category_name = '$categoryName'";
@@ -526,7 +628,21 @@ use \App\Models\Expense;
         $db = static::getDB();
         $stmt = $db->prepare($sql);
 
-         return $stmt->execute();
+        return $stmt->execute();
+    }
+
+    public static function isIncomesTableEmpty($categoryName)
+    {
+      $userId = Auth::getUserId();
+      $categoryId = Income::getIncomeCategoryId($categoryName, $userId);
+
+      $sql = "SELECT COUNT(*) FROM incomes
+              WHERE user_id = '$userId' AND income_category_assigned_to_user_id = '$categoryId'";
+
+      $db = static::getDB();
+      $stmt = $db->query($sql);
+
+      return $stmt->fetchColumn(); 
     }
 
     /**
@@ -535,14 +651,61 @@ use \App\Models\Expense;
     public function deleteExpensesCategory()
     {
         $categoryName = $_GET['name'];
+        $userId = Auth::getUserId();
 
         $sql = "DELETE FROM expenses_category_assigned_to_users
-                WHERE category_name = '$categoryName'";
+                WHERE category_name = '$categoryName' AND user_id = '$userId'";
+
+        $db = static::getDB();
+        $stmt = $db->query($sql);
+
+        return $stmt->execute();
+    }
+
+    public static function isExpensesTableEmpty($categoryName)
+    {
+      $userId = Auth::getUserId();
+
+      $categoryId = Expense::getExpenseCategoryId($categoryName, $userId);
+
+      $sql = "SELECT COUNT(*) FROM expenses
+              WHERE user_id = '$userId' AND expense_category_assigned_to_user_id = '$categoryId'";
+
+      $db = static::getDB();
+      $stmt = $db->query($sql);
+
+      return $stmt->fetchColumn(); 
+    }
+
+    /**
+     * Delete payments method
+     */
+    public function deletePaymentsMethod()
+    {
+        $paymentsMethodName = $_GET['name'];
+        $userId = Auth::getUserId();
+
+        $sql = "DELETE FROM payment_methods_assigned_to_users
+                WHERE name = '$paymentsMethodName' AND user_id = '$userId'";
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
 
          return $stmt->execute();
+    }
+
+    public static function isPaymentMethodTableEmpty($paymentsMethodName)
+    {
+      $userId = Auth::getUserId();
+      $paymentMethodId = Expense::getPaymentMethodId($paymentsMethodName, $userId);
+
+      $sql = "SELECT COUNT(*) FROM expenses
+              WHERE user_id = '$userId' AND payment_method_assigned_to_user_id = '$paymentMethodId'";
+
+      $db = static::getDB();
+      $stmt = $db->query($sql);
+
+      return $stmt->fetchColumn(); 
     }
 
     /**
@@ -574,6 +737,24 @@ use \App\Models\Expense;
       $sql = "UPDATE incomes_category_assigned_to_users
       SET category_name = '$newName'
       WHERE id = '$categoryId'";
+
+      $db = static::getDB();
+      $stmt = $db->prepare($sql);
+
+       return $stmt->execute();
+    }
+
+    /**
+     * Edit payments method name
+     */
+    public function editPaymentsMethod($paymentsMethodName, $newName)
+    {
+      $userId = Auth::getUserId();
+      $paymentsMethodId = Expense::getPaymentMethodId($paymentsMethodName, $userId);
+
+      $sql = "UPDATE payment_methods_assigned_to_users
+      SET name = '$newName'
+      WHERE id = '$paymentsMethodId'";
 
       $db = static::getDB();
       $stmt = $db->prepare($sql);
